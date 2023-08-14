@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_handeling_apis/cubits/general_app_cubit.dart';
 import 'package:shop_app_handeling_apis/cubits/general_app_states.dart';
+import 'package:shop_app_handeling_apis/screens/login_screen.dart';
 import 'package:shop_app_handeling_apis/screens/onboarding_screen.dart';
 import 'package:shop_app_handeling_apis/shared/cached_helper.dart';
 import 'package:shop_app_handeling_apis/shared/dio_helper.dart';
@@ -30,8 +31,12 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: lightTheme,
             darkTheme: darkTheme,
-            themeMode: GeneralAppCubit.get(context).isDark? ThemeMode.dark: ThemeMode.light,
-            home: const OnboardingScreen(),
+            themeMode: GeneralAppCubit.get(context).isDark
+                ? ThemeMode.dark
+                : ThemeMode.light,
+            home: GeneralAppCubit.get(context).showOnboarding
+                ? const OnboardingScreen()
+                : const LoginScreen(),
           );
         },
       ),
