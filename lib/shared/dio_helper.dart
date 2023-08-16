@@ -1,23 +1,38 @@
 import 'package:dio/dio.dart';
 
-// Base url : https://newsapi.org/
-// Path : v2/top-headlines
+// Base url : https://student.valuxapps.com/api/
+// Path : login
 // Query : ?country=us&apiKey=
 // Key : d4b900204cdf42b38f0e5c30b8ac8303
 class DioHelper {
   static Dio? dio;
 
   static void init() {
-    dio = Dio(BaseOptions(
-      baseUrl: 'https://newsapi.org/',
-      receiveDataWhenStatusError: true,
-    ));
+    dio = Dio(
+      BaseOptions(
+        baseUrl: 'https://student.valuxapps.com/api/',
+        receiveDataWhenStatusError: true,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
   }
 
-  static Future<Response> getNews(Map<String, dynamic> query) async {
-    return await dio!.get('v2/top-headlines', queryParameters: query);
-  }
-  static Future<Response> searchNews(Map<String, dynamic> query) async {
-    return await dio!.get('v2/everything', queryParameters: query);
+  static Future<Response> post({
+    required String endPoint,
+    Object? data,
+    Map<String, dynamic>? query,
+    String? lang,
+    String? token,
+    }
+  ) async {
+    dio!.options.headers.addEntries(
+      {
+        'lang': lang,
+        'Authorization': token,
+      }.entries,
+    );
+    return await dio!.post(endPoint, data: data, queryParameters: query);
   }
 }

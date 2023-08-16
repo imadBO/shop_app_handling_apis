@@ -6,12 +6,14 @@ import 'package:shop_app_handeling_apis/screens/login_screen.dart';
 import 'package:shop_app_handeling_apis/screens/onboarding_screen.dart';
 import 'package:shop_app_handeling_apis/shared/cached_helper.dart';
 import 'package:shop_app_handeling_apis/shared/dio_helper.dart';
+import 'package:shop_app_handeling_apis/shared/observer.dart';
 import 'package:shop_app_handeling_apis/shared/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachedHelper.init();
   DioHelper.init();
+  Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
 }
 
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
                 : ThemeMode.light,
             home: GeneralAppCubit.get(context).showOnboarding
                 ? const OnboardingScreen()
-                : const LoginScreen(),
+                : LoginScreen(),
           );
         },
       ),
