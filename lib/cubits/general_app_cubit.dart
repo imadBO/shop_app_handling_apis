@@ -9,6 +9,7 @@ class GeneralAppCubit extends Cubit<GeneralAppStates>{
   int index = 0;
   bool isDark = CachedHelper.getData("isDark")??false;
   bool showOnboarding = CachedHelper.getData('showOnboarding')??true;
+  bool isVisible = false;
   List<String> onBoardingTitles = [
     "Welcome to the Ultimate Shopping Experience!",
     "Unleash Your Inner Shopper: Discover Our E-Shop Wonderland!",
@@ -36,5 +37,10 @@ class GeneralAppCubit extends Cubit<GeneralAppStates>{
   void updateIndex(int value){
     index = value;
     emit(BottomNavUpdateIndexState());
+  }
+
+  void changePasswordVisibility(){
+    isVisible = !isVisible;
+    emit(PasswordVisibilityState());
   }
 }

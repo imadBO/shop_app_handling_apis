@@ -22,7 +22,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     CachedHelper.putData('showOnboarding', false);
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
+        builder: (context) => LoginScreen(),
       ),
     );
   }
