@@ -24,7 +24,7 @@ class AuthCubit extends Cubit<AuthStates> {
       Response<dynamic> response = await DioHelper.post(
         endPoint: 'login',
         data: {'email': email, 'password': password},
-        lang: 'ar',
+        lang: 'en',
       );
       loginModel = LoginModel.fromJSON(response.data);
       emit(LoginSuccessState(loginModel!));
@@ -33,5 +33,25 @@ class AuthCubit extends Cubit<AuthStates> {
     }
     isLoading = false;
     emit(LoadingState());
+  }
+
+  Future<void> register({required Map userData}) async {
+    isLoading = true;
+    emit(LoadingState());
+    try {
+      Response<dynamic> response = await DioHelper.post(
+        endPoint: 'register',
+        data: userData,
+        lang: 'en',
+      );
+      loginModel = LoginModel.fromJSON(response.data);
+      isLoading = false;
+      emit(LoadingState());
+      emit(RegisterSuccessState(loginModel!));
+    } catch (error) {
+      isLoading = false;
+      emit(LoadingState());
+      emit(RegisterErrorState(error.toString()));
+    }
   }
 }
