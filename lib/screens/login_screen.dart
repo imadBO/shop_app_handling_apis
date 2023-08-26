@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app_handeling_apis/cubits/auth_cubit.dart';
 import 'package:shop_app_handeling_apis/cubits/auth_states.dart';
 import 'package:shop_app_handeling_apis/screens/register_screen.dart';
+import 'package:shop_app_handeling_apis/shared/cached_helper.dart';
 import 'package:shop_app_handeling_apis/shared/constants.dart';
 import 'package:shop_app_handeling_apis/widgets/shared/custom_form_field.dart';
 
@@ -21,7 +22,8 @@ class LoginScreen extends StatelessWidget {
         child: BlocConsumer<AuthCubit, AuthStates>(
           listener: (BuildContext context, state) {
             if (state is LoginSuccessState) {
-              if (!state.loginModel.status) {
+              if (state.loginModel.status) {
+                CachedHelper.putData('token', state.loginModel.data!.token);
                 Fluttertoast.showToast(
                   msg: state.loginModel.message,
                   backgroundColor: Colors.red,

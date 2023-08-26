@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app_handeling_apis/cubits/auth_cubit.dart';
 import 'package:shop_app_handeling_apis/cubits/auth_states.dart';
 import 'package:shop_app_handeling_apis/screens/login_screen.dart';
+import 'package:shop_app_handeling_apis/shared/cached_helper.dart';
 import 'package:shop_app_handeling_apis/shared/constants.dart';
 import 'package:shop_app_handeling_apis/widgets/shared/custom_form_field.dart';
 
@@ -12,6 +14,7 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController userNameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   final TextEditingController confirmPwdController = TextEditingController();
 
   @override
@@ -20,7 +23,31 @@ class RegisterScreen extends StatelessWidget {
       body: BlocProvider<AuthCubit>(
         create: (BuildContext context) => AuthCubit(),
         child: BlocConsumer<AuthCubit, AuthStates>(
-          listener: (BuildContext context, state) {},
+          listener: (BuildContext context, state) {
+            if(state is RegisterSuccessState){
+               if (state.loginModel.status) {
+                CachedHelper.putData('token', state.loginModel.data!.token);
+                Fluttertoast.showToast(
+                  msg: state.loginModel.message,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                );
+              } else {
+                 Fluttertoast.showToast(
+                  msg: state.loginModel.message,
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                );
+              }
+            }
+            if(state is RegisterErrorState){
+              Fluttertoast.showToast(
+                msg: state.error,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+              );
+            }
+          },
           builder: (BuildContext context, Object? state) {
             AuthCubit authCubit = AuthCubit.get(context);
             return SafeArea(
@@ -54,6 +81,17 @@ class RegisterScreen extends StatelessWidget {
                                 validator: (value) {
                                   return value!.isEmpty
                                       ? "User name must not be empty"
+                                      : null;
+                                },
+                              ),
+                              CustomFormField(
+                                label: 'Phone',
+                                controller: phoneController,
+                                type: TextInputType.phone,
+                                prefixIcon: Icons.phone,
+                                validator: (value) {
+                                  return value!.isEmpty
+                                      ? "Please provide a phone number"
                                       : null;
                                 },
                               ),
@@ -93,8 +131,9 @@ class RegisterScreen extends StatelessWidget {
                                 type: TextInputType.visiblePassword,
                                 prefixIcon: Icons.lock_outline,
                                 validator: (value) {
-                                  return value!.isEmpty
-                                      ? "Password is too short"
+                                  return (value!.isEmpty ||
+                                          value != passwordController.text)
+                                      ? "This must be identical to the password"
                                       : null;
                                 },
                               ),
@@ -108,11 +147,26 @@ class RegisterScreen extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(25),
                                   ),
-                                  onPressed: () {},
-                                  child: const Text(
-                                    'REGISTER',
-                                    style: TextStyle(fontSize: 18),
-                                  ),
+                                  onPressed: () {
+                                    if (formKey.currentState!.validate()) {
+                                      authCubit.register(userData: {
+                                        'name': userNameController.text,
+                                        'phone': phoneController.text,
+                                        'email': emailController.text,
+                                        'password': passwordController.text,
+                                      });
+                                    }
+                                  },
+                                  child: authCubit.isLoading
+                                      ? const Center(
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      : const Text(
+                                          'REGISTER',
+                                          style: TextStyle(fontSize: 18),
+                                        ),
                                 ),
                               ),
                               Row(
