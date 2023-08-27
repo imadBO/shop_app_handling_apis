@@ -16,4 +16,8 @@ class CachedHelper{
   static dynamic getData(String key){
     return prefs!.get(key);
   }
+
+  static Future<bool> deleteData(String key){
+    return prefs!.remove(key);
+  }
 }

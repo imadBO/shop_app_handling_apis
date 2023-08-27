@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app_handeling_apis/cubits/auth_cubit.dart';
 import 'package:shop_app_handeling_apis/cubits/general_app_cubit.dart';
 import 'package:shop_app_handeling_apis/cubits/general_app_states.dart';
+import 'package:shop_app_handeling_apis/screens/home_screen.dart';
 import 'package:shop_app_handeling_apis/screens/login_screen.dart';
 import 'package:shop_app_handeling_apis/screens/onboarding_screen.dart';
 import 'package:shop_app_handeling_apis/shared/cached_helper.dart';
@@ -23,8 +25,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<GeneralAppCubit>(
-      create: (BuildContext context) => GeneralAppCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (BuildContext context) => GeneralAppCubit()),
+        BlocProvider(create: (BuildContext context) => AuthCubit()),
+      ],
       child: BlocConsumer<GeneralAppCubit, GeneralAppStates>(
         listener: (BuildContext context, state) {},
         builder: (BuildContext context, Object? state) {
@@ -38,7 +43,9 @@ class MyApp extends StatelessWidget {
                 : ThemeMode.light,
             home: GeneralAppCubit.get(context).showOnboarding
                 ? const OnboardingScreen()
-                : LoginScreen(),
+                : CachedHelper.getData('token') != null
+                    ? const HomeScreen()
+                    : LoginScreen(),
           );
         },
       ),
