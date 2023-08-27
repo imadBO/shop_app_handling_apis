@@ -1,4 +1,5 @@
 import 'package:shop_app_handeling_apis/models/login_model.dart';
+import 'package:shop_app_handeling_apis/models/logout_response.dart';
 
 abstract class AuthStates {}
 
@@ -25,6 +26,16 @@ class RegisterSuccessState extends AuthStates {
 
 class RegisterErrorState extends AuthStates {
   RegisterErrorState(this.error);
+  final String error;
+}
+
+class LogoutSuccessState extends AuthStates {
+  LogoutSuccessState(this.logoutResponseModel);
+  final LogoutResponseModel logoutResponseModel;
+}
+
+class LogoutErrorState extends AuthStates {
+  LogoutErrorState(this.error);
   final String error;
 }
 
