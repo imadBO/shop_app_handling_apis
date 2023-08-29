@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app_handeling_apis/cubits/auth_cubit.dart';
 import 'package:shop_app_handeling_apis/cubits/auth_states.dart';
-import 'package:shop_app_handeling_apis/screens/home_screen.dart';
+import 'package:shop_app_handeling_apis/screens/shop_screen_layout.dart';
 import 'package:shop_app_handeling_apis/screens/register_screen.dart';
 import 'package:shop_app_handeling_apis/shared/cached_helper.dart';
 import 'package:shop_app_handeling_apis/shared/constants.dart';
@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const HomeScreen(),
+                  builder: (context) => const ShopScreenLayout(),
                 ),
               );
             } else {

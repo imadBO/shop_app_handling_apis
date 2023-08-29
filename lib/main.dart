@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_handeling_apis/cubits/auth_cubit.dart';
 import 'package:shop_app_handeling_apis/cubits/general_app_cubit.dart';
 import 'package:shop_app_handeling_apis/cubits/general_app_states.dart';
-import 'package:shop_app_handeling_apis/screens/home_screen.dart';
+import 'package:shop_app_handeling_apis/screens/shop_screen_layout.dart';
 import 'package:shop_app_handeling_apis/screens/login_screen.dart';
 import 'package:shop_app_handeling_apis/screens/onboarding_screen.dart';
 import 'package:shop_app_handeling_apis/shared/cached_helper.dart';
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
             home: GeneralAppCubit.get(context).showOnboarding
                 ? const OnboardingScreen()
                 : CachedHelper.getData('token') != null
-                    ? const HomeScreen()
+                    ? const ShopScreenLayout()
                     : LoginScreen(),
           );
         },

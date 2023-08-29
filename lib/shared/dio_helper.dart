@@ -25,8 +25,7 @@ class DioHelper {
     Map<String, dynamic>? query,
     String? lang,
     String? token,
-    }
-  ) async {
+  }) async {
     dio!.options.headers.addEntries(
       {
         'lang': lang,
@@ -34,5 +33,21 @@ class DioHelper {
       }.entries,
     );
     return await dio!.post(endPoint, data: data, queryParameters: query);
+  }
+
+  static Future<Response> get({
+    required String endPoint,
+    Object? data,
+    Map<String, dynamic>? query,
+    String? lang,
+    String? token,
+  }) async {
+    dio!.options.headers.addEntries(
+      {
+        'lang': lang,
+        'Authorization': token,
+      }.entries,
+    );
+    return await dio!.get(endPoint, data: data, queryParameters: query);
   }
 }
