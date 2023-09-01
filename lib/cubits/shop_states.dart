@@ -8,6 +8,8 @@ class LoadingState extends ShopStates {}
 
 class AutoplayState extends ShopStates {}
 
+class ActionsState extends ShopStates {}
+
 class HomeDataFetchingSuccessStae extends ShopStates {}
 
 class HomeDataFetchingErrorStae extends ShopStates {
