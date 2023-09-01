@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
             home: GeneralAppCubit.get(context).showOnboarding
                 ? const OnboardingScreen()
                 : CachedHelper.getData('token') != null
-                    ? const ShopScreenLayout()
+                    ? ShopScreenLayout()
                     : LoginScreen(),
           );
         },

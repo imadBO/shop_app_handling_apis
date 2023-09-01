@@ -13,6 +13,7 @@ class ShopCubit extends Cubit<ShopStates> {
   int index = 0;
   bool isLoading = false;
   bool shouldAutoPlay = true;
+  bool showActions = false;
   String token = CachedHelper.getData('token');
   HomeResponseModel? homeResponseModel;
 
@@ -23,9 +24,14 @@ class ShopCubit extends Cubit<ShopStates> {
     emit(BottomNavUpdateIndexState());
   }
 
-  void updateAutoPlay(bool autoplay){
+  void updateAutoPlay(bool autoplay) {
     shouldAutoPlay = autoplay;
     emit(AutoplayState());
+  }
+
+  void updateActionsVisibility(bool visibility) {
+    showActions = visibility;
+    emit(ActionsState());
   }
 
   Future<void> fetchHomeData() async {

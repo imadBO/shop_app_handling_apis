@@ -14,6 +14,11 @@ class CustomFormField extends StatelessWidget {
     this.onTap,
     this.onSuffixTapped,
     this.onChanged,
+    this.height,
+    this.radius,
+    this.contentPadding,
+    this.marging,
+    this.floatingBehavior,
   });
 
   final String label;
@@ -27,14 +32,20 @@ class CustomFormField extends StatelessWidget {
   final void Function()? onTap;
   final void Function()? onSuffixTapped;
   final void Function(String)? onChanged;
+  final double? height;
+  final double? radius;
+  final EdgeInsets? contentPadding;
+  final EdgeInsets? marging;
+  final FloatingLabelBehavior? floatingBehavior;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 65,
-      margin: const EdgeInsets.all(10),
+      height: height ?? 65,
+      margin: marging ?? const EdgeInsets.all(10),
       child: TextFormField(
         controller: controller,
+        textAlignVertical: TextAlignVertical.center,
         keyboardType: TextInputType.text,
         obscureText: obscure,
         decoration: InputDecoration(
@@ -45,8 +56,10 @@ class CustomFormField extends StatelessWidget {
             onPressed: onSuffixTapped,
           ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(radius ?? 20),
           ),
+          contentPadding: contentPadding,
+          floatingLabelBehavior: floatingBehavior,
         ),
         readOnly: readOnly,
         validator: validator,
