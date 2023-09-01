@@ -42,7 +42,7 @@ class ShopScreenLayout extends StatelessWidget {
                 headerSliverBuilder: (context, innerBoxIsScrolled) {
                   return [
                     SliverAppBar(
-                      expandedHeight: 120,
+                      expandedHeight: 100,
                       floating: true,
                       snap: true,
                       pinned: true,

@@ -16,3 +16,10 @@ class HomeDataFetchingErrorStae extends ShopStates {
   HomeDataFetchingErrorStae(this.error);
   final String error;
 }
+
+class CategoriesFetchingSuccessState extends ShopStates {}
+
+class CategoriesFetchingErrorState extends ShopStates {
+  CategoriesFetchingErrorState(this.error);
+  final String error;
+}
