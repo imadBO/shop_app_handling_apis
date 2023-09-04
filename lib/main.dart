@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_handeling_apis/cubits/auth_cubit.dart';
 import 'package:shop_app_handeling_apis/cubits/general_app_cubit.dart';
 import 'package:shop_app_handeling_apis/cubits/general_app_states.dart';
+import 'package:shop_app_handeling_apis/cubits/shop_cubit.dart';
 import 'package:shop_app_handeling_apis/screens/shop_screen_layout.dart';
 import 'package:shop_app_handeling_apis/screens/login_screen.dart';
 import 'package:shop_app_handeling_apis/screens/onboarding_screen.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (BuildContext context) => GeneralAppCubit()),
         BlocProvider(create: (BuildContext context) => AuthCubit()),
+        BlocProvider(create: (BuildContext context) => ShopCubit()),
       ],
       child: BlocConsumer<GeneralAppCubit, GeneralAppStates>(
         listener: (BuildContext context, state) {},

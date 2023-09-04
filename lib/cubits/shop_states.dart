@@ -23,3 +23,14 @@ class CategoriesFetchingErrorState extends ShopStates {
   CategoriesFetchingErrorState(this.error);
   final String error;
 }
+
+class SearchMatchesSuccessState extends ShopStates {
+  SearchMatchesSuccessState(this.status, this.message);
+  final bool status;
+  final String? message;
+}
+
+class SearchMatchesErrorState extends ShopStates {
+  SearchMatchesErrorState(this.error);
+  final String error;
+}

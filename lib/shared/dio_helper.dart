@@ -25,6 +25,7 @@ class DioHelper {
     Map<String, dynamic>? query,
     String? lang,
     String? token,
+    CancelToken? cancelToken,
   }) async {
     dio!.options.headers.addEntries(
       {
@@ -32,7 +33,7 @@ class DioHelper {
         'Authorization': token,
       }.entries,
     );
-    return await dio!.post(endPoint, data: data, queryParameters: query);
+    return await dio!.post(endPoint, data: data, queryParameters: query, cancelToken: cancelToken);
   }
 
   static Future<Response> get({

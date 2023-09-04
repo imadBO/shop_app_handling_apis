@@ -7,6 +7,7 @@ class CustomFormField extends StatelessWidget {
     required this.controller,
     this.obscure = false,
     this.readOnly = false,
+    this.enabled = true,
     required this.type,
     required this.prefixIcon,
     this.suffixIcon,
@@ -25,6 +26,7 @@ class CustomFormField extends StatelessWidget {
   final TextEditingController controller;
   final bool obscure;
   final bool readOnly;
+  final bool enabled;
   final TextInputType type;
   final IconData prefixIcon;
   final IconData? suffixIcon;
@@ -62,6 +64,7 @@ class CustomFormField extends StatelessWidget {
           floatingLabelBehavior: floatingBehavior,
         ),
         readOnly: readOnly,
+        enabled: enabled,
         validator: validator,
         onTap: onTap,
         onChanged: onChanged,
