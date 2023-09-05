@@ -34,3 +34,18 @@ class SearchMatchesErrorState extends ShopStates {
   SearchMatchesErrorState(this.error);
   final String error;
 }
+
+class ToggleFavoriteSuccessState extends ShopStates {
+  ToggleFavoriteSuccessState(this.status, this.message);
+  final bool status;
+  final String? message;
+}
+
+class ToggleFavoriteErrorState extends ShopStates {
+  ToggleFavoriteErrorState(this.error);
+  final String error;
+}
+
+class RealTimeToggleFavoriteSuccessState extends ShopStates {}
+
+class RealTimeToggleFavoriteErrorState extends ShopStates {}

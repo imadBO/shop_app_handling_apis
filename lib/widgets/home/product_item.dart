@@ -1,22 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app_handeling_apis/models/home%20models/product_model.dart';
+import 'package:shop_app_handeling_apis/widgets/Favorites/favorite_button.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({
     super.key,
-    required this.image,
-    required this.title,
-    required this.price,
-    required this.oldPrice,
-    required this.discount,
+    required this.product,
+    required this.favoriteCallback,
   });
 
-  final String image;
-  final String title;
-  final double price;
-  final double oldPrice;
-  final double discount;
-
+  final ProductModel product;
+  final Future<void> Function({required ProductModel product}) favoriteCallback;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -38,7 +33,7 @@ class ProductItem extends StatelessWidget {
                     child: CachedNetworkImage(
                       height: 200,
                       fit: BoxFit.cover,
-                      imageUrl: image,
+                      imageUrl: product.image,
                       placeholder: (context, url) =>
                           Image.asset('assets/images/placeholder.png'),
                       errorWidget: (context, url, error) =>
@@ -51,7 +46,7 @@ class ProductItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
-                  title,
+                  product.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontWeight: FontWeight.w500),
@@ -63,14 +58,14 @@ class ProductItem extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      '\$${price.toStringAsFixed(2)}',
+                      '\$${product.price.toStringAsFixed(2)}',
                       style: const TextStyle(fontWeight: FontWeight.w600),
                     ),
                     const Spacer(),
                     Visibility(
-                      visible: discount != 0.0,
+                      visible: product.discount != 0.0,
                       child: Text(
-                        '\$${oldPrice.toStringAsFixed(2)}',
+                        '\$${product.oldPrice.toStringAsFixed(2)}',
                         style: const TextStyle(
                           color: Colors.red,
                           decoration: TextDecoration.lineThrough,
@@ -85,12 +80,24 @@ class ProductItem extends StatelessWidget {
             ],
           ),
         ),
-        const Positioned(
+        Positioned(
           top: 10,
           right: 10,
           child: CircleAvatar(
             radius: 20,
-            child: Icon(Icons.favorite_outline),
+            child: product.inFavorites
+                ? FavoriteButton(
+                    icon: Icons.favorite,
+                    callback: () {
+                      favoriteCallback(product: product);
+                    },
+                  )
+                : FavoriteButton(
+                    icon: Icons.favorite_outline,
+                    callback: () {
+                      favoriteCallback(product: product);
+                    },
+                  ),
           ),
         ),
       ],

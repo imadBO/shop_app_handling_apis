@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_handeling_apis/cubits/shop_states.dart';
 import 'package:shop_app_handeling_apis/models/categories%20models/categories_response.dart';
+import 'package:shop_app_handeling_apis/models/favorites%20models/toggle_favorites_response.dart';
 import 'package:shop_app_handeling_apis/models/home%20models/home_response.dart';
+import 'package:shop_app_handeling_apis/models/home%20models/product_model.dart';
 import 'package:shop_app_handeling_apis/models/search%20models/search_response.dart';
 import 'package:shop_app_handeling_apis/shared/cached_helper.dart';
 import 'package:shop_app_handeling_apis/shared/dio_helper.dart';
@@ -20,6 +22,7 @@ class ShopCubit extends Cubit<ShopStates> {
   HomeResponseModel? homeResponseModel;
   CategoriesResponse? categoriesResponse;
   SearchResponse? searchResponse;
+  ToggleFavoriteResponse? toggleFavResponse;
   CancelToken? searchCancelToken;
 
   static ShopCubit get(contex) => BlocProvider.of(contex);
@@ -84,7 +87,7 @@ class ShopCubit extends Cubit<ShopStates> {
   Future<void> getSearchMatches({required String input}) async {
     isLoading = true;
     emit(LoadingState());
-    
+
     searchCancelToken?.cancel('Cancelled due to new request');
     searchCancelToken = CancelToken();
     try {
@@ -112,6 +115,33 @@ class ShopCubit extends Cubit<ShopStates> {
       }
     }
   }
+
+  Future<void> toggleFavorite({required ProductModel product}) async {
+    product.inFavorites = !product.inFavorites;
+    emit(RealTimeToggleFavoriteSuccessState());
+    try {
+      Response<dynamic> response = await DioHelper.post(
+        endPoint: 'favorites',
+        data: {'product_id': product.id},
+        lang: 'en',
+        token: token,
+      );
+      toggleFavResponse = ToggleFavoriteResponse.fromJSON(response.data);
+      if (toggleFavResponse!.status == false) {
+        product.inFavorites = !product.inFavorites;
+        emit(RealTimeToggleFavoriteErrorState());
+      }
+      emit(ToggleFavoriteSuccessState(
+        toggleFavResponse!.status,
+        toggleFavResponse!.message,
+      ));
+    } catch (error) {
+      product.inFavorites = !product.inFavorites;
+      emit(RealTimeToggleFavoriteErrorState());
+      emit(ToggleFavoriteErrorState(error.toString()));
+    }
+  }
+
   @override
   Future<void> close() {
     searchCancelToken?.cancel("Cancelled due to bloc disposal");
