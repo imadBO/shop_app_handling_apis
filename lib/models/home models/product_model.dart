@@ -13,8 +13,8 @@ class ProductModel {
   ProductModel.fromJSON(Map<String, dynamic> json) {
     id = json['id'];
     price = json['price'].toDouble();
-    oldPrice = json['old_price'].toDouble();
-    discount = json['discount'].toDouble();
+    oldPrice = json['old_price'] == null ? 0 : json['old_price'].toDouble();
+    discount = json['discount'] == null ? 0 : json['discount'].toDouble();
     image = json['image'];
     name = json['name'];
     description = json['description'];

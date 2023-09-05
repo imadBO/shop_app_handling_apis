@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app_handeling_apis/cubits/shop_cubit.dart';
 import 'package:shop_app_handeling_apis/cubits/shop_states.dart';
 import 'package:shop_app_handeling_apis/widgets/home/banners_slider.dart';
@@ -12,7 +13,24 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopStates>(
-      listener: (BuildContext context, state) {},
+      listener: (BuildContext context, state) {
+        if (state is ToggleFavoriteSuccessState) {
+          if (!state.status) {
+            Fluttertoast.showToast(
+              msg: state.message!,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+            );
+          }
+        }
+        if (state is ToggleFavoriteErrorState) {
+          Fluttertoast.showToast(
+            msg: state.error,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
+        }
+      },
       builder: (BuildContext context, Object? state) {
         ShopCubit shopCubit = ShopCubit.get(context);
         return shopCubit.isLoading
@@ -50,17 +68,13 @@ class HomeScreen extends StatelessWidget {
                         crossAxisCount: 2, // Number of columns in the grid
                         crossAxisSpacing: 2,
                         mainAxisSpacing: 2,
-                        childAspectRatio: 1/1.5,
+                        childAspectRatio: 1 / 1.5,
                       ),
                       itemBuilder: (context, index) {
-                        var prodruct =
-                            shopCubit.homeResponseModel!.data.products[index];
                         return ProductItem(
-                          image: prodruct.image,
-                          title: prodruct.name,
-                          price: prodruct.price,
-                          oldPrice:prodruct.oldPrice,
-                          discount: prodruct.discount,
+                          product:
+                              shopCubit.homeResponseModel!.data.products[index],
+                          favoriteCallback: shopCubit.toggleFavorite,
                         );
                       },
                       itemCount:

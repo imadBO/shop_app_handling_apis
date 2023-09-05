@@ -28,6 +28,22 @@ class SearchScreen extends StatelessWidget {
             textColor: Colors.white,
           );
         }
+        if (state is ToggleFavoriteSuccessState) {
+          if (!state.status) {
+            Fluttertoast.showToast(
+              msg: state.message!,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+            );
+          }
+        }
+        if (state is ToggleFavoriteErrorState) {
+          Fluttertoast.showToast(
+            msg: state.error,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
+        }
       },
       builder: (BuildContext context, Object? state) {
         ShopCubit shopCubit = ShopCubit.get(context);
@@ -63,13 +79,9 @@ class SearchScreen extends StatelessWidget {
                         childAspectRatio: 1 / 1.5,
                       ),
                       itemBuilder: (context, index) {
-                        var prodruct = shopCubit.searchResponse!.data[index];
                         return ProductItem(
-                          image: prodruct.image,
-                          title: prodruct.name,
-                          price: prodruct.price,
-                          oldPrice: 0,
-                          discount: 0,
+                          product: shopCubit.searchResponse!.data[index],
+                          favoriteCallback: shopCubit.toggleFavorite,
                         );
                       },
                       itemCount: shopCubit.searchResponse!.data.length,
