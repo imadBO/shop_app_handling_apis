@@ -18,8 +18,8 @@ class ProductModel {
     image = json['image'];
     name = json['name'];
     description = json['description'];
-    images = json['images'];
-    inFavorites = json['in_favorites'];
-    inCart = json['in_cart'];
+    images = json['images'] ?? [];
+    inFavorites = json['in_favorites'] ?? true;
+    inCart = json['in_cart'] ?? false;
   }
 }

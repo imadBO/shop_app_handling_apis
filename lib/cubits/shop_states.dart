@@ -49,3 +49,14 @@ class ToggleFavoriteErrorState extends ShopStates {
 class RealTimeToggleFavoriteSuccessState extends ShopStates {}
 
 class RealTimeToggleFavoriteErrorState extends ShopStates {}
+
+class FetchFavoritesSuccessState extends ShopStates {
+  FetchFavoritesSuccessState(this.status, this.message);
+  final bool status;
+  final String? message;
+}
+
+class FetchFavoritesErrorState extends ShopStates {
+  FetchFavoritesErrorState(this.error);
+  final String error;
+}
