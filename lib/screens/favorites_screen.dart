@@ -28,6 +28,22 @@ class FavoritesScreen extends StatelessWidget {
             textColor: Colors.white,
           );
         }
+        if (state is DeleteFavoriteSuccessState) {
+          if (!state.status) {
+            Fluttertoast.showToast(
+              msg: state.message!,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+            );
+          }
+        }
+        if (state is DeleteFavoriteErrorState) {
+          Fluttertoast.showToast(
+            msg: state.error,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
+        }
       },
       builder: (BuildContext context, Object? state) {
         ShopCubit shopCubit = ShopCubit.get(context);
@@ -51,7 +67,8 @@ class FavoritesScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return ProductItem(
                         product: shopCubit.fetchedFavResponse!.data[index].data,
-                        favoriteCallback: shopCubit.toggleFavorite,
+                        favoriteItem: shopCubit.fetchedFavResponse!.data[index],
+                        deleteCallback: shopCubit.removeFromFavorites,
                       );
                     },
                     itemCount: shopCubit.fetchedFavResponse!.data.length,

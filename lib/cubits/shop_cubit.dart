@@ -25,6 +25,7 @@ class ShopCubit extends Cubit<ShopStates> {
   SearchResponse? searchResponse;
   ToggleFavoriteResponse? toggleFavResponse;
   FetchedFavoritesResponse? fetchedFavResponse;
+  ToggleFavoriteResponse? deletedFavResponse;
   CancelToken? searchCancelToken;
 
   static ShopCubit get(contex) => BlocProvider.of(contex);
@@ -164,11 +165,55 @@ class ShopCubit extends Cubit<ShopStates> {
         toggleFavResponse!.message,
       ));
     } catch (error) {
-      print(error.toString());
       isLoading = false;
       emit(LoadingState());
       emit(FetchFavoritesErrorState(error.toString()));
     }
+  }
+
+  Future<void> removeFromFavorites({
+    required FavoritesResponseData favItem,
+  }) async {
+    if (homeResponseModel != null) {
+      homeResponseModel!.data.products
+          .firstWhere(
+            (element) => element.id == favItem.data.id,
+          )
+          .inFavorites = false;
+    }
+    int itemIndex = fetchedFavResponse!.data.indexOf(favItem);
+    fetchedFavResponse!.data.remove(favItem);
+    emit(RealTimeDeleteFavoriteSuccessState());
+    try {
+      Response<dynamic> response = await DioHelper.delete(
+        endPoint: 'favorites/${favItem.id}',
+        lang: 'en',
+        token: token,
+      );
+      deletedFavResponse = ToggleFavoriteResponse.fromJSON(response.data);
+      if (deletedFavResponse!.status == false) {
+        undoDeletingFaveorite(itemIndex, favItem);
+      }
+      emit(DeleteFavoriteSuccessState(
+        deletedFavResponse!.status,
+        deletedFavResponse!.message,
+      ));
+    } catch (error) {
+      undoDeletingFaveorite(itemIndex, favItem);
+      emit(DeleteFavoriteErrorState(error.toString()));
+    }
+  }
+
+  void undoDeletingFaveorite(int index, FavoritesResponseData item) {
+    if (homeResponseModel != null) {
+      homeResponseModel!.data.products
+          .firstWhere(
+            (element) => element.id == item.data.id,
+          )
+          .inFavorites = true;
+    }
+    fetchedFavResponse!.data.insert(index, item);
+    emit(RealTimeDeleteFavoriteErrorState());
   }
 
   @override
