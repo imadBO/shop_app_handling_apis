@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app_handeling_apis/models/favorites%20models/fetched_favorites_response.dart';
 import 'package:shop_app_handeling_apis/models/home%20models/product_model.dart';
 import 'package:shop_app_handeling_apis/widgets/Favorites/favorite_button.dart';
 
@@ -7,11 +8,17 @@ class ProductItem extends StatelessWidget {
   const ProductItem({
     super.key,
     required this.product,
-    required this.favoriteCallback,
+    this.deleteCallback,
+    this.favoriteItem,
+    this.favoriteCallback,
   });
 
   final ProductModel product;
-  final Future<void> Function({required ProductModel product}) favoriteCallback;
+  final FavoritesResponseData? favoriteItem;
+  final Future<void> Function({required FavoritesResponseData favItem})?
+      deleteCallback;
+  final Future<void> Function({required ProductModel product})?
+      favoriteCallback;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -89,13 +96,21 @@ class ProductItem extends StatelessWidget {
                 ? FavoriteButton(
                     icon: Icons.favorite,
                     callback: () {
-                      favoriteCallback(product: product);
+                      if (favoriteCallback != null) {
+                        favoriteCallback!(product: product);
+                      } else {
+                        deleteCallback!(favItem: favoriteItem!);
+                      }
                     },
                   )
                 : FavoriteButton(
                     icon: Icons.favorite_outline,
                     callback: () {
-                      favoriteCallback(product: product);
+                      if (favoriteCallback != null) {
+                        favoriteCallback!(product: product);
+                      } else {
+                        deleteCallback!(favItem: favoriteItem!);
+                      }
                     },
                   ),
           ),

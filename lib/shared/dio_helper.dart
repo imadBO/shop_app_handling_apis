@@ -51,4 +51,20 @@ class DioHelper {
     );
     return await dio!.get(endPoint, data: data, queryParameters: query);
   }
+
+  static Future<Response> delete({
+    required String endPoint,
+    Object? data,
+    Map<String, dynamic>? query,
+    String? lang,
+    String? token,
+  }) async {
+    dio!.options.headers.addEntries(
+      {
+        'lang': lang,
+        'Authorization': token,
+      }.entries,
+    );
+    return await dio!.delete(endPoint, data: data, queryParameters: query);
+  }
 }

@@ -60,3 +60,18 @@ class FetchFavoritesErrorState extends ShopStates {
   FetchFavoritesErrorState(this.error);
   final String error;
 }
+
+class DeleteFavoriteSuccessState extends ShopStates {
+  DeleteFavoriteSuccessState(this.status, this.message);
+  final bool status;
+  final String? message;
+}
+
+class DeleteFavoriteErrorState extends ShopStates {
+  DeleteFavoriteErrorState(this.error);
+  final String error;
+}
+
+class RealTimeDeleteFavoriteSuccessState extends ShopStates {}
+
+class RealTimeDeleteFavoriteErrorState extends ShopStates {}
