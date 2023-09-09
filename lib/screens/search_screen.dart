@@ -82,6 +82,7 @@ class SearchScreen extends StatelessWidget {
                         return ProductItem(
                           product: shopCubit.searchResponse!.data[index],
                           favoriteCallback: shopCubit.toggleFavorite,
+                          tapCallback: shopCubit.fetchProductDetails,
                         );
                       },
                       itemCount: shopCubit.searchResponse!.data.length,

@@ -6,6 +6,7 @@ import 'package:shop_app_handeling_apis/models/favorites%20models/fetched_favori
 import 'package:shop_app_handeling_apis/models/favorites%20models/toggle_favorites_response.dart';
 import 'package:shop_app_handeling_apis/models/home%20models/home_response.dart';
 import 'package:shop_app_handeling_apis/models/home%20models/product_model.dart';
+import 'package:shop_app_handeling_apis/models/product_details_models/product_details_response.dart';
 import 'package:shop_app_handeling_apis/models/search%20models/search_response.dart';
 import 'package:shop_app_handeling_apis/shared/cached_helper.dart';
 import 'package:shop_app_handeling_apis/shared/dio_helper.dart';
@@ -26,6 +27,7 @@ class ShopCubit extends Cubit<ShopStates> {
   ToggleFavoriteResponse? toggleFavResponse;
   FetchedFavoritesResponse? fetchedFavResponse;
   ToggleFavoriteResponse? deletedFavResponse;
+  DetailsResponse? productDetailsResponse;
   CancelToken? searchCancelToken;
 
   static ShopCubit get(contex) => BlocProvider.of(contex);
@@ -68,6 +70,26 @@ class ShopCubit extends Cubit<ShopStates> {
       isLoading = false;
       emit(LoadingState());
       emit(HomeDataFetchingErrorStae(error.toString()));
+    }
+  }
+
+  Future<void> fetchProductDetails({required int productId}) async {
+    isLoading = true;
+    emit(LoadingState());
+    try {
+      Response<dynamic> response = await DioHelper.get(
+        endPoint: 'products/$productId',
+        lang: 'en',
+        token: token,
+      );
+      productDetailsResponse = DetailsResponse.fromJSON(response.data);
+      isLoading = false;
+      emit(LoadingState());
+      emit(FetchDetailsSuccessState());
+    } catch (error) {
+      isLoading = false;
+      emit(LoadingState());
+      emit(FetchDetailsErrorState());
     }
   }
 
