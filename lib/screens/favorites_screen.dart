@@ -69,6 +69,7 @@ class FavoritesScreen extends StatelessWidget {
                         product: shopCubit.fetchedFavResponse!.data[index].data,
                         favoriteItem: shopCubit.fetchedFavResponse!.data[index],
                         deleteCallback: shopCubit.removeFromFavorites,
+                        tapCallback: shopCubit.fetchProductDetails,
                       );
                     },
                     itemCount: shopCubit.fetchedFavResponse!.data.length,

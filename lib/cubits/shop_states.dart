@@ -75,3 +75,7 @@ class DeleteFavoriteErrorState extends ShopStates {
 class RealTimeDeleteFavoriteSuccessState extends ShopStates {}
 
 class RealTimeDeleteFavoriteErrorState extends ShopStates {}
+
+class FetchDetailsSuccessState extends ShopStates {}
+
+class FetchDetailsErrorState extends ShopStates {}

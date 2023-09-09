@@ -75,6 +75,7 @@ class HomeScreen extends StatelessWidget {
                           product:
                               shopCubit.homeResponseModel!.data.products[index],
                           favoriteCallback: shopCubit.toggleFavorite,
+                          tapCallback: shopCubit.fetchProductDetails,
                         );
                       },
                       itemCount:
