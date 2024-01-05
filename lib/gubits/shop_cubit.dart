@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app_handeling_apis/cubits/shop_states.dart';
+import 'package:shop_app_handeling_apis/gubits/shop_states.dart';
 import 'package:shop_app_handeling_apis/models/categories%20models/categories_response.dart';
 import 'package:shop_app_handeling_apis/models/favorites%20models/fetched_favorites_response.dart';
 import 'package:shop_app_handeling_apis/models/favorites%20models/toggle_favorites_response.dart';

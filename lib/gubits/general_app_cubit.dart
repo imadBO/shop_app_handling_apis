@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app_handeling_apis/cubits/general_app_states.dart';
-import 'package:shop_app_handeling_apis/shared/cached_helper.dart';
+import 'package:shop_app_handeling_apis/core/helpers/cached_helper.dart';
+import 'package:shop_app_handeling_apis/gubits/general_app_states.dart';
 
 
 class GeneralAppCubit extends Cubit<GeneralAppStates>{

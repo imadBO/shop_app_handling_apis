@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shop_app_handeling_apis/cubits/auth_cubit.dart';
-import 'package:shop_app_handeling_apis/cubits/auth_states.dart';
+import 'package:shop_app_handeling_apis/gubits/auth_cubit.dart';
+import 'package:shop_app_handeling_apis/gubits/auth_states.dart';
 import 'package:shop_app_handeling_apis/screens/shop_screen_layout.dart';
 import 'package:shop_app_handeling_apis/screens/login_screen.dart';
 import 'package:shop_app_handeling_apis/shared/cached_helper.dart';

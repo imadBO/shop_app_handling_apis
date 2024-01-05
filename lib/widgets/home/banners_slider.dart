@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_app_handeling_apis/cubits/shop_cubit.dart';
+import 'package:shop_app_handeling_apis/gubits/shop_cubit.dart';
 
 class BannersSlider extends StatelessWidget {
   const BannersSlider({

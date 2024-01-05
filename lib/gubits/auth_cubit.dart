@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app_handeling_apis/cubits/auth_states.dart';
+import 'package:shop_app_handeling_apis/gubits/auth_states.dart';
 import 'package:shop_app_handeling_apis/models/login_model.dart';
 import 'package:shop_app_handeling_apis/models/logout_response.dart';
 import 'package:shop_app_handeling_apis/shared/cached_helper.dart';
