@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shop_app_handeling_apis/gubits/auth_cubit.dart';
-import 'package:shop_app_handeling_apis/gubits/auth_states.dart';
+import 'package:shop_app_handeling_apis/core/resources/colors_manager.dart';
+import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
+import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_cubit.dart';
+import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_states.dart';
+import 'package:shop_app_handeling_apis/features/auth/presentation/views/register_screen.dart';
 import 'package:shop_app_handeling_apis/screens/shop_screen_layout.dart';
-import 'package:shop_app_handeling_apis/screens/register_screen.dart';
-import 'package:shop_app_handeling_apis/shared/cached_helper.dart';
-import 'package:shop_app_handeling_apis/shared/constants.dart';
 import 'package:shop_app_handeling_apis/widgets/shared/custom_form_field.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -21,32 +21,18 @@ class LoginScreen extends StatelessWidget {
       body: BlocConsumer<AuthCubit, AuthStates>(
         listener: (BuildContext context, state) {
           if (state is LoginSuccessState) {
-            if (state.loginModel.status) {
-              CachedHelper.putData('token', state.loginModel.data!.token);
-              Fluttertoast.showToast(
-                msg: state.loginModel.message,
-                backgroundColor: Colors.green,
-                textColor: Colors.white,
-              );
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ShopScreenLayout(),
-                ),
-              );
-            } else {
-              Fluttertoast.showToast(
-                msg: state.loginModel.message,
-                backgroundColor: Colors.red,
-                textColor: Colors.white,
-              );
-            }
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ShopScreenLayout(),
+              ),
+            );
           }
           if (state is LoginErrorState) {
             Fluttertoast.showToast(
               msg: state.error,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
+              backgroundColor: ColorsManager.error,
+              textColor: ColorsManager.white,
             );
           }
         },
@@ -63,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                       const Padding(
                         padding: EdgeInsets.only(left: 10),
                         child: Text(
-                          'Login',
+                          StringsManager.loginPageLabel,
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
@@ -76,18 +62,18 @@ class LoginScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             CustomFormField(
-                              label: 'Email',
+                              label: StringsManager.emailLabel,
                               controller: emailController,
                               type: TextInputType.emailAddress,
                               prefixIcon: Icons.email_outlined,
                               validator: (value) {
                                 return value!.isEmpty
-                                    ? "Email must not be empty"
+                                    ? StringsManager.emailEmpty
                                     : null;
                               },
                             ),
                             CustomFormField(
-                              label: 'Password',
+                              label: StringsManager.passwordLabel,
                               controller: passwordController,
                               obscure: authCubit.isObscured,
                               type: TextInputType.visiblePassword,
@@ -100,15 +86,15 @@ class LoginScreen extends StatelessWidget {
                               },
                               validator: (value) {
                                 return value!.isEmpty
-                                    ? "Password is too short"
+                                    ? StringsManager.shortPassword
                                     : null;
                               },
                             ),
                             Padding(
                               padding: const EdgeInsets.all(10),
                               child: MaterialButton(
-                                color: kPrimaryColor,
-                                textColor: Colors.white,
+                                color: const Color.fromRGBO(0, 0, 0, 1),
+                                textColor: ColorsManager.white,
                                 minWidth: double.infinity,
                                 height: 50,
                                 shape: RoundedRectangleBorder(
@@ -125,11 +111,11 @@ class LoginScreen extends StatelessWidget {
                                 child: authCubit.isLoading
                                     ? const Center(
                                         child: CircularProgressIndicator(
-                                          color: Colors.white,
+                                          color: ColorsManager.white,
                                         ),
                                       )
                                     : const Text(
-                                        'LOGIN',
+                                        StringsManager.loginButtonLabel,
                                         style: TextStyle(fontSize: 18),
                                       ),
                               ),
@@ -137,7 +123,7 @@ class LoginScreen extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text('You don\'t have an account?'),
+                                const Text(StringsManager.noAccount),
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pushReplacement(
@@ -146,7 +132,9 @@ class LoginScreen extends StatelessWidget {
                                       ),
                                     );
                                   },
-                                  child: const Text('REGISTER'),
+                                  child: const Text(
+                                    StringsManager.registerButtonLabel,
+                                  ),
                                 ),
                               ],
                             ),

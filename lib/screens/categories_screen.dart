@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app_handeling_apis/cubits/shop_cubit.dart';
-import 'package:shop_app_handeling_apis/cubits/shop_states.dart';
+import 'package:shop_app_handeling_apis/gubits/shop_cubit.dart';
+import 'package:shop_app_handeling_apis/gubits/shop_states.dart';
 import 'package:shop_app_handeling_apis/widgets/categories/category_item.dart';
 
 class CategoriesScreen extends StatelessWidget {

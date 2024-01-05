@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app_handeling_apis/cubits/general_app_cubit.dart';
-import 'package:shop_app_handeling_apis/cubits/general_app_states.dart';
-import 'package:shop_app_handeling_apis/screens/login_screen.dart';
+import 'package:shop_app_handeling_apis/features/auth/presentation/views/login_screen.dart';
+import 'package:shop_app_handeling_apis/gubits/general_app_cubit.dart';
+import 'package:shop_app_handeling_apis/gubits/general_app_states.dart';
 import 'package:shop_app_handeling_apis/shared/cached_helper.dart';
 import 'package:shop_app_handeling_apis/shared/constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
