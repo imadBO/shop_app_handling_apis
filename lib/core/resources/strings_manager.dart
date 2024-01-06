@@ -1,4 +1,5 @@
 class StringsManager {
+  //Auth form.
   static const String loginPageLabel = 'Login';
   static const String loginButtonLabel = 'LOGIN';
   static const String registerPageLabel = 'Register';
@@ -10,6 +11,16 @@ class StringsManager {
   static const String phoneLabel = "Phone";
   static const String passwordLabel = 'Password';
   static const String confirmPwdLabel = 'Confirm password';
+
+  //Shop screen layout.
+  static const String homeTitle = 'Hanout';
+  static const String categoriesTitle = 'Categories';
+  static const String favoritesTitle = 'Favorites';
+  static const String settingsTitle = 'Settings';
+
+  //Search Screen.
+  static const String searchBarHint = 'Search';
+  static const String searchPlaceholder = 'Type something ...';
 
   //Errors.
   static const String defaultError = 'Something went wrong! Try again later.';

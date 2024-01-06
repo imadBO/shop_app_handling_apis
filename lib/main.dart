@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_handeling_apis/core/helpers/cached_helper.dart';
-import 'package:shop_app_handeling_apis/core/helpers/dio_helper.dart' ;
+import 'package:shop_app_handeling_apis/core/helpers/dio_helper.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/login_screen.dart';
+import 'package:shop_app_handeling_apis/features/search/presentation/cubits/search_cubit.dart';
 import 'package:shop_app_handeling_apis/gubits/general_app_cubit.dart';
 import 'package:shop_app_handeling_apis/gubits/general_app_states.dart';
 import 'package:shop_app_handeling_apis/gubits/shop_cubit.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (BuildContext context) => GeneralAppCubit()),
         BlocProvider(create: (BuildContext context) => authSl<AuthCubit>()),
+        BlocProvider(create: (BuildContext context) => searchSl<SearchCubit>()),
         BlocProvider(create: (BuildContext context) => ShopCubit()),
       ],
       child: BlocConsumer<GeneralAppCubit, GeneralAppStates>(
