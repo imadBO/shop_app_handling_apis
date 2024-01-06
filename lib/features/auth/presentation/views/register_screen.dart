@@ -6,8 +6,8 @@ import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_states.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/login_screen.dart';
-import 'package:shop_app_handeling_apis/screens/shop_screen_layout.dart';
-import 'package:shop_app_handeling_apis/widgets/shared/custom_form_field.dart';
+import 'package:shop_app_handeling_apis/features/auth/presentation/views/shop_screen_layout.dart';
+import 'package:shop_app_handeling_apis/features/auth/presentation/widgets/custom_form_field.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});

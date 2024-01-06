@@ -8,4 +8,5 @@ class AppConstants {
   static const loginEndpoint = 'login';
   static const registerEndpoint = 'register';
   static const logoutEndpoint = 'logout';
+  static const searchEndpoint = 'products/search';
 }
