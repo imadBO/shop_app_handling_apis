@@ -9,4 +9,6 @@ class AppConstants {
   static const registerEndpoint = 'register';
   static const logoutEndpoint = 'logout';
   static const searchEndpoint = 'products/search';
+  static const homeDataEndpoint = 'home';
+  static const favoritesEndpoint = 'favorites';
 }

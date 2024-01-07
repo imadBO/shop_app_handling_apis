@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app_handeling_apis/core/resources/assets_manager.dart';
+import 'package:shop_app_handeling_apis/core/resources/colors_manager.dart';
+import 'package:shop_app_handeling_apis/features/home/domain/entities/product_entity.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/widgets/favorite_button.dart';
-import 'package:shop_app_handeling_apis/features/search/domain/entities/search_product_entity.dart';
 import 'package:shop_app_handeling_apis/models/favorites%20models/fetched_favorites_response.dart';
 import 'package:shop_app_handeling_apis/screens/product_details_screen.dart';
 
@@ -15,11 +17,11 @@ class ProductItem extends StatelessWidget {
     required this.tapCallback,
   });
 
-  final SearchProductEntity product;
+  final ProductEntity product;
   final FavoritesResponseData? favoriteItem;
   final Future<void> Function({required FavoritesResponseData favItem})?
       deleteCallback;
-  final Future<void> Function({required SearchProductEntity product})?
+  final Future<void> Function({required ProductEntity product})?
       favoriteCallback;
   final Future<void> Function({required int productId}) tapCallback;
   @override
@@ -36,14 +38,14 @@ class ProductItem extends StatelessWidget {
       child: Stack(
         children: [
           Card(
-            color: Colors.white,
+            color: ColorsManager.white,
             elevation: 5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DecoratedBox(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: ColorsManager.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Center(
@@ -54,9 +56,9 @@ class ProductItem extends StatelessWidget {
                         fit: BoxFit.cover,
                         imageUrl: product.image,
                         placeholder: (context, url) =>
-                            Image.asset('assets/images/placeholder.png'),
+                            Image.asset(AssetsManager.placeholderImage),
                         errorWidget: (context, url, error) =>
-                            Image.asset('assets/images/error_image.png'),
+                            Image.asset(AssetsManager.errorImage),
                       ),
                     ),
                   ),
@@ -87,9 +89,9 @@ class ProductItem extends StatelessWidget {
                         child: Text(
                           '\$${product.oldPrice.toStringAsFixed(2)}',
                           style: const TextStyle(
-                            color: Colors.red,
+                            color: ColorsManager.error,
                             decoration: TextDecoration.lineThrough,
-                            decorationColor: Colors.red,
+                            decorationColor: ColorsManager.error,
                             decorationThickness: 2,
                           ),
                         ),

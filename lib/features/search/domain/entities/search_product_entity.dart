@@ -1,25 +1,16 @@
-class SearchProductEntity {
-  int id;
-  double price;
-  double oldPrice;
-  double discount;
-  String image;
-  String name;
-  String description;
-  List<dynamic> images;
-  bool inFavorites;
-  bool inCart;
+import 'package:shop_app_handeling_apis/features/home/domain/entities/product_entity.dart';
 
+class SearchProductEntity extends ProductEntity {
   SearchProductEntity({
-    required this.id,
-    required this.price,
-    required this.oldPrice,
-    required this.discount,
-    required this.image,
-    required this.name,
-    required this.description,
-    required this.images,
-    required this.inFavorites,
-    required this.inCart,
+    required super.id,
+    required super.price,
+    required super.oldPrice,
+    required super.discount,
+    required super.image,
+    required super.name,
+    required super.description,
+    required super.images,
+    required super.inFavorites,
+    required super.inCart,
   });
 }

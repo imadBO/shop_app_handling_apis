@@ -13,7 +13,7 @@ import 'package:shop_app_handeling_apis/shared/dio_helper.dart';
 
 class ShopCubit extends Cubit<ShopStates> {
   ShopCubit() : super(InitialShopState()) {
-    fetchHomeData();
+    // fetchHomeData();
   }
 
   int index = 0;

@@ -22,6 +22,9 @@ class StringsManager {
   static const String searchBarHint = 'Search';
   static const String searchPlaceholder = 'Type something ...';
 
+  //HomeScreen.
+  static const String homeProductsLabel = 'Products';
+
   //Errors.
   static const String defaultError = 'Something went wrong! Try again later.';
   static const String emailEmpty = "Email must not be empty";
