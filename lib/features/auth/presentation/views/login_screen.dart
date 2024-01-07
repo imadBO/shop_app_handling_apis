@@ -8,6 +8,7 @@ import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_s
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/register_screen.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/shop_screen_layout.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/widgets/custom_form_field.dart';
+import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_cubit.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -21,6 +22,7 @@ class LoginScreen extends StatelessWidget {
       body: BlocConsumer<AuthCubit, AuthStates>(
         listener: (BuildContext context, state) {
           if (state is LoginSuccessState) {
+            HomeCubit.initData(context);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(

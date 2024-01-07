@@ -10,7 +10,6 @@ import 'package:shop_app_handeling_apis/features/search/presentation/cubits/sear
 class SearchCubit extends Cubit<SearchStates> {
   SearchCubit(this._searchUsecase) : super(SearchInitialState());
   final SearchUsecase _searchUsecase;
-  final String _token = CachedHelper.getData('token');
   bool isLoading = false;
   CancelToken? _searchCancelToken;
   List<SearchProductEntity> searchResult = [];
@@ -25,7 +24,7 @@ class SearchCubit extends Cubit<SearchStates> {
     _searchCancelToken = CancelToken();
 
     final response = await _searchUsecase.call(params: {
-      'token': _token,
+      'token': CachedHelper.getData('token'),
       'cancelToken': _searchCancelToken,
       'input': input,
     });
