@@ -31,4 +31,12 @@ class HomeService {
       lang: Langs.english.getString(),
     );
   }
+
+  Future<Response> fetchFavorites({required String token}) async {
+    return await DioHelper.get(
+      endPoint: AppConstants.favoritesEndpoint,
+      lang: Langs.english.getString(),
+      token: token,
+    );
+  }
 }

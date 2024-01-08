@@ -6,7 +6,6 @@ import 'package:shop_app_handeling_apis/features/auth/domain/use_cases/login_use
 import 'package:shop_app_handeling_apis/features/auth/domain/use_cases/logout_usecase.dart';
 import 'package:shop_app_handeling_apis/features/auth/domain/use_cases/signup_usecase.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_states.dart';
-import 'package:shop_app_handeling_apis/models/logout_response.dart';
 
 class AuthCubit extends Cubit<AuthStates> {
   final LoginUsecase _loginUsecase;
@@ -18,7 +17,6 @@ class AuthCubit extends Cubit<AuthStates> {
   bool isLoading = false;
   static bool isDark = CachedHelper.getData('isDark') ?? false;
   static bool showOnboarding = CachedHelper.getData('showOnboarding') ?? true;
-  LogoutResponseModel? logoutResponseModel;
 
   static AuthCubit get(context) => BlocProvider.of(context);
 

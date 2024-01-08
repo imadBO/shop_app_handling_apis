@@ -45,6 +45,10 @@ class StringsManager {
   static const String productDetailsScreenTitle = 'Details';
   static const String addToCartLabel = 'ADD TO CART';
 
+  //Favorites screen.
+  static const String noFavorites =
+      'No items found ! Go ahead and like some ...';
+
   //Errors.
   static const String defaultError = 'Something went wrong! Try again later.';
   static const String emailEmpty = "Email must not be empty";

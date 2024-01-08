@@ -1,43 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shop_app_handeling_apis/gubits/shop_cubit.dart';
-import 'package:shop_app_handeling_apis/gubits/shop_states.dart';
-import 'package:shop_app_handeling_apis/widgets/home/product_item.dart';
+import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
+import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_cubit.dart';
+import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_states.dart';
+import 'package:shop_app_handeling_apis/features/home/presentation/widgets/product_item.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ShopCubit, ShopStates>(
+    return BlocConsumer<HomeCubit, HomeStates>(
       listener: (BuildContext context, state) {
-        if (state is FetchFavoritesSuccessState) {
-          if (!state.status) {
-            Fluttertoast.showToast(
-              msg: state.message!,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-            );
-          }
-        }
-        if (state is FetchFavoritesErrorState) {
+        if (state is FavoritesErrorState) {
           Fluttertoast.showToast(
             msg: state.error,
             backgroundColor: Colors.red,
             textColor: Colors.white,
           );
         }
-        if (state is DeleteFavoriteSuccessState) {
-          if (!state.status) {
-            Fluttertoast.showToast(
-              msg: state.message!,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-            );
-          }
-        }
-        if (state is DeleteFavoriteErrorState) {
+        if (state is ToggleFavoriteErrorState) {
           Fluttertoast.showToast(
             msg: state.error,
             backgroundColor: Colors.red,
@@ -46,14 +29,14 @@ class FavoritesScreen extends StatelessWidget {
         }
       },
       builder: (BuildContext context, Object? state) {
-        ShopCubit shopCubit = ShopCubit.get(context);
-        return shopCubit.isLoading
+        final homeCubit = HomeCubit.get(context);
+        return homeCubit.favoritesLoading
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : shopCubit.fetchedFavResponse == null
+            : homeCubit.favorites.isEmpty
                 ? const Center(
-                    child: Text('No items found !'),
+                    child: Text(StringsManager.noFavorites),
                   )
                 : GridView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -66,13 +49,11 @@ class FavoritesScreen extends StatelessWidget {
                     ),
                     itemBuilder: (context, index) {
                       return ProductItem(
-                        product: shopCubit.fetchedFavResponse!.data[index].data,
-                        favoriteItem: shopCubit.fetchedFavResponse!.data[index],
-                        deleteCallback: shopCubit.removeFromFavorites,
-                        tapCallback: shopCubit.fetchProductDetails,
+                        product: homeCubit.favorites[index],
+                        favoriteCallback: homeCubit.toggleFavorite,
                       );
                     },
-                    itemCount: shopCubit.fetchedFavResponse!.data.length,
+                    itemCount: homeCubit.favorites.length,
                   );
       },
     );

@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_handeling_apis/core/helpers/cached_helper.dart';
 import 'package:shop_app_handeling_apis/core/helpers/dio_helper.dart';
+import 'package:shop_app_handeling_apis/core/helpers/observer.dart';
+import 'package:shop_app_handeling_apis/core/resources/themes_manager.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/login_screen.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/onboarding_screen.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/shop_screen_layout.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_cubit.dart';
 import 'package:shop_app_handeling_apis/features/search/presentation/cubits/search_cubit.dart';
-import 'package:shop_app_handeling_apis/gubits/shop_cubit.dart';
 import 'package:shop_app_handeling_apis/injection_container.dart';
-
-import 'package:shop_app_handeling_apis/shared/observer.dart';
-import 'package:shop_app_handeling_apis/shared/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +32,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (BuildContext context) => authSl<AuthCubit>()),
         BlocProvider(create: (BuildContext context) => searchSl<SearchCubit>()),
         BlocProvider(create: (BuildContext context) => homeSl<HomeCubit>()),
-        BlocProvider(create: (BuildContext context) => ShopCubit()),
       ],
       child: MaterialApp(
         title: 'Shop app',
