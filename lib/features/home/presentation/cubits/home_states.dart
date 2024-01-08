@@ -34,3 +34,12 @@ class CategoriesErrorState extends HomeStates {
 }
 
 class CategoriesLoadingState extends HomeStates {}
+
+class FavoritesSuccessState extends HomeStates {}
+
+class FavoritesErrorState extends HomeStates {
+  final String error;
+  FavoritesErrorState(this.error);
+}
+
+class FavoritesLoadingState extends HomeStates {}

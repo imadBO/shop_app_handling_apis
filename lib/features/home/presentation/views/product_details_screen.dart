@@ -24,7 +24,11 @@ class ProductDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ImagesSlider(images: product.images),
+                  ImagesSlider(
+                    images: product.images.isNotEmpty
+                        ? product.images
+                        : [product.image],
+                  ),
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 2),

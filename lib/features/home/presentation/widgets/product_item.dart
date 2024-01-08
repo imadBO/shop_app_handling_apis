@@ -5,25 +5,17 @@ import 'package:shop_app_handeling_apis/core/resources/colors_manager.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/entities/product_entity.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/views/product_details_screen.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/widgets/favorite_button.dart';
-import 'package:shop_app_handeling_apis/models/favorites%20models/fetched_favorites_response.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({
     super.key,
     required this.product,
-    this.deleteCallback,
-    this.favoriteItem,
     this.favoriteCallback,
-    required this.tapCallback,
   });
 
   final ProductEntity product;
-  final FavoritesResponseData? favoriteItem;
-  final Future<void> Function({required FavoritesResponseData favItem})?
-      deleteCallback;
   final Future<void> Function({required ProductEntity product})?
       favoriteCallback;
-  final Future<void> Function({required int productId}) tapCallback;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -33,7 +25,6 @@ class ProductItem extends StatelessWidget {
             builder: (context) => ProductDetailsScreen(product: product),
           ),
         );
-        tapCallback(productId: product.id);
       },
       child: Stack(
         children: [
@@ -111,21 +102,13 @@ class ProductItem extends StatelessWidget {
                   ? FavoriteButton(
                       icon: Icons.favorite,
                       callback: () {
-                        if (favoriteCallback != null) {
-                          favoriteCallback!(product: product);
-                        } else {
-                          deleteCallback!(favItem: favoriteItem!);
-                        }
+                        favoriteCallback!(product: product);
                       },
                     )
                   : FavoriteButton(
                       icon: Icons.favorite_outline,
                       callback: () {
-                        if (favoriteCallback != null) {
-                          favoriteCallback!(product: product);
-                        } else {
-                          deleteCallback!(favItem: favoriteItem!);
-                        }
+                        favoriteCallback!(product: product);
                       },
                     ),
             ),

@@ -5,12 +5,11 @@ import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_cubit.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_states.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/views/categories_screen.dart';
+import 'package:shop_app_handeling_apis/features/home/presentation/views/favorites_screen.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/views/home_screen.dart';
+import 'package:shop_app_handeling_apis/features/home/presentation/views/settings_screen.dart';
 import 'package:shop_app_handeling_apis/features/search/presentation/views/search_screen.dart';
 import 'package:shop_app_handeling_apis/features/search/presentation/widgets/search_bar.dart';
-import 'package:shop_app_handeling_apis/screens/favorites_screen.dart';
-import 'package:shop_app_handeling_apis/screens/settings_screen.dart';
-import 'package:shop_app_handeling_apis/shared/constants.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class ShopScreenLayout extends StatelessWidget {
@@ -112,22 +111,34 @@ class ShopScreenLayout extends StatelessWidget {
             destinations: const [
               NavigationDestination(
                 icon: Icon(Icons.home_outlined),
-                selectedIcon: Icon(Icons.home, color: kPrimaryColor),
+                selectedIcon: Icon(
+                  Icons.home,
+                  color: ColorsManager.primary,
+                ),
                 label: StringsManager.homeTitle,
               ),
               NavigationDestination(
                 icon: Icon(Icons.category_outlined),
-                selectedIcon: Icon(Icons.category, color: kPrimaryColor),
+                selectedIcon: Icon(
+                  Icons.category,
+                  color: ColorsManager.primary,
+                ),
                 label: StringsManager.categoriesTitle,
               ),
               NavigationDestination(
                 icon: Icon(Icons.favorite_border),
-                selectedIcon: Icon(Icons.favorite, color: kPrimaryColor),
+                selectedIcon: Icon(
+                  Icons.favorite,
+                  color: ColorsManager.primary,
+                ),
                 label: StringsManager.favoritesTitle,
               ),
               NavigationDestination(
                 icon: Icon(Icons.settings_outlined),
-                selectedIcon: Icon(Icons.settings, color: kPrimaryColor),
+                selectedIcon: Icon(
+                  Icons.settings,
+                  color: ColorsManager.primary,
+                ),
                 label: StringsManager.settingsTitle,
               ),
             ],

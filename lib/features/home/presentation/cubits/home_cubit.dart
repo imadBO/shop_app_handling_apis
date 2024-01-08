@@ -7,14 +7,18 @@ import 'package:shop_app_handeling_apis/features/home/domain/entities/category_e
 import 'package:shop_app_handeling_apis/features/home/domain/entities/home_data_entity.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/entities/product_entity.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/use_cases/categories_usecase.dart';
+import 'package:shop_app_handeling_apis/features/home/domain/use_cases/fetch_favorites_usecase.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/use_cases/home_data_usecase.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/use_cases/toggle_favorite_usecase.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_states.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
-  HomeCubit(this._homeDataUsecase, this._toggleFavoriteUsecase,
-      this._categoriesUsecase)
-      : super(HomeInitialState()) {
+  HomeCubit(
+    this._homeDataUsecase,
+    this._toggleFavoriteUsecase,
+    this._categoriesUsecase,
+    this._fetchFavoritesUsecase,
+  ) : super(HomeInitialState()) {
     if (CachedHelper.getData('token') != null) {
       ftechHomeData();
     }
@@ -25,6 +29,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final HomeDataUsecase _homeDataUsecase;
   final ToggleFavoriteUsecase _toggleFavoriteUsecase;
   final CategoriesUsecase _categoriesUsecase;
+  final FetchFavoritesUsecase _fetchFavoritesUsecase;
   bool homeDataLoading = false;
   bool categoriesLoading = false;
   bool favoritesLoading = false;
@@ -35,7 +40,7 @@ class HomeCubit extends Cubit<HomeStates> {
   List<ProductEntity> homeProducts = [];
   List<BannerEntity> homeBanners = [];
   List<CategoryEntity> categories = [];
-  List favorites = [];
+  List<ProductEntity> favorites = [];
 
   static HomeCubit get(context) => BlocProvider.of(context);
 
@@ -54,8 +59,8 @@ class HomeCubit extends Cubit<HomeStates> {
     if (newIndex == 1 && categories.isEmpty) {
       fetchCategories();
     }
-    if (newIndex == 2 && favorites.isEmpty) {
-      // fetchUserFavorites();
+    if (newIndex == 2) {
+      fetchFavorites();
     }
     emit(BottomNavUpdateIndexState());
   }
@@ -81,14 +86,22 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   Future<void> toggleFavorite({required ProductEntity product}) async {
-    product.inFavorites = !product.inFavorites;
+    final newState = !product.inFavorites;
+    product.inFavorites = newState;
+    homeProducts.firstWhere((element) => element.id == product.id).inFavorites =
+        newState;
+    favorites.removeWhere((element) => element.id == product.id);
     emit(RealTimeToggleFavoriteState());
     final response = await _toggleFavoriteUsecase.call(params: {
       'productId': product.id,
       'token': CachedHelper.getData('token'),
     });
-    if (response is DataFailure) {
-      product.inFavorites = !product.inFavorites;
+    if (response is DataFailure || response is DataFailureDio) {
+      product.inFavorites = !newState;
+      homeProducts
+          .firstWhere((element) => element.id == product.id)
+          .inFavorites = !newState;
+      favorites.add(product);
       emit(RealTimeToggleFavoriteState());
       if (state is DataFailureDio) {
         emit(ToggleFavoriteErrorState(response.dioError.toString()));
@@ -114,5 +127,24 @@ class HomeCubit extends Cubit<HomeStates> {
     }
     categoriesLoading = false;
     emit(CategoriesLoadingState());
+  }
+
+  Future<void> fetchFavorites() async {
+    favoritesLoading = true;
+    emit(FavoritesLoadingState());
+    final response = await _fetchFavoritesUsecase.call(
+      params: CachedHelper.getData('token'),
+    );
+    if (response is DataSuccess) {
+      favorites = response.data!;
+      emit(FavoritesSuccessState());
+    } else {
+      if (response is DataFailureDio) {
+        emit(FavoritesErrorState(response.dioError.toString()));
+      }
+      emit(FavoritesErrorState(response.error ?? StringsManager.defaultError));
+    }
+    favoritesLoading = false;
+    emit(FavoritesLoadingState());
   }
 }
