@@ -23,3 +23,14 @@ class CartUpdateErrorState extends CartStates {
 }
 
 class RealTimeQuantityUpdate extends CartStates {}
+
+class AddRemoveCartSuccessState extends CartStates {}
+
+class AddRemoveCartErrorState extends CartStates {
+  final String error;
+  AddRemoveCartErrorState(this.error);
+}
+
+class RealTimeAddRemoveUpdate extends CartStates {}
+
+class AdiingRemovingLoadingState extends CartStates {}

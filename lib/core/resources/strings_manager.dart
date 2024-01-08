@@ -45,6 +45,7 @@ class StringsManager {
   //Product details screen.
   static const String productDetailsScreenTitle = 'Details';
   static const String addToCartLabel = 'ADD TO CART';
+  static const String removeFromCartLabel = 'REMOVE FROM CART';
 
   //Favorites screen.
   static const String noFavorites =
@@ -54,7 +55,7 @@ class StringsManager {
   static const String emptyCartLabel = 'No items! Add some ...';
   static const String cartSuccessFullyUpdated =
       "Cart has been successfully update";
-
+  static const String checkOutLabel = 'CHECKOUT FOR ';
   //Errors.
   static const String defaultError = 'Something went wrong! Try again later.';
   static const String emailEmpty = "Email must not be empty";
