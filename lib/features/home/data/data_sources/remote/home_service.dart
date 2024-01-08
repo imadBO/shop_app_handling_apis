@@ -24,4 +24,11 @@ class HomeService {
       token: token,
     );
   }
+
+  Future<Response> fetchCategories() async {
+    return await DioHelper.get(
+      endPoint: AppConstants.categoriesEndpoint,
+      lang: Langs.english.getString(),
+    );
+  }
 }
