@@ -51,4 +51,27 @@ class CartRepositoryImpl implements CartRepository {
       return DataFailure(error.toString());
     }
   }
+
+  @override
+  Future<DataState<int>> addOrRemoveCart({
+    required int productId,
+    required String token,
+  }) async {
+    try {
+      final response = await _cartService.addOrRemoveCart(
+        productId: productId,
+        token: token,
+      );
+      if (response.data['status'] == true) {
+        return DataSuccess(response.data['data']['id']);
+      } else {
+        return DataFailure(response.data['message']);
+      }
+    } catch (error) {
+      if (error is DioException) {
+        return DataFailureDio(error);
+      }
+      return DataFailure(error.toString());
+    }
+  }
 }

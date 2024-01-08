@@ -48,22 +48,48 @@ class CartScreen extends StatelessWidget {
                 ? const Center(
                     child: Text(StringsManager.emptyCartLabel),
                   )
-                : ListView.separated(
-                    itemBuilder: (context, index) {
-                      return CartItem(
-                        cartItemEntity: cartCubit.cartEntity!.cartItems[index],
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Divider(
-                          thickness: 1.5,
-                          color: ColorsManager.lightGrey,
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return CartItem(
+                              cartItemEntity:
+                                  cartCubit.cartEntity!.cartItems[index],
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Divider(
+                                thickness: 1.5,
+                                color: ColorsManager.lightGrey,
+                              ),
+                            );
+                          },
+                          itemCount: cartCubit.cartEntity!.cartItems.length,
                         ),
-                      );
-                    },
-                    itemCount: cartCubit.cartEntity!.cartItems.length,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: MaterialButton(
+                            color: const Color.fromRGBO(0, 0, 0, 1),
+                            textColor: ColorsManager.white,
+                            minWidth: double.infinity,
+                            height: 50,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            onPressed: () {},
+                            child: Text(
+                              '${StringsManager.checkOutLabel}\t\t\$${cartCubit.cartEntity!.total.toStringAsFixed(2)}',
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   );
       },
     );

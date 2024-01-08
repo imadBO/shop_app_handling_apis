@@ -52,9 +52,9 @@ class ProductDetailsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const Positioned(
+            Positioned(
               bottom: 0,
-              child: CartManagementBar(),
+              child: CartManagementBar(product: product),
             ),
           ],
         ),

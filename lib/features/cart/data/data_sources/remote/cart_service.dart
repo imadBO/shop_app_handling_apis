@@ -25,4 +25,16 @@ class CartService {
       lang: Langs.english.getString(),
     );
   }
+
+  Future<Response> addOrRemoveCart({
+    required int productId,
+    required String token,
+  }) async {
+    return await DioHelper.post(
+      endPoint: AppConstants.cartsEndpoint,
+      token: token,
+      data: {'product_id': productId},
+      lang: Langs.english.getString(),
+    );
+  }
 }

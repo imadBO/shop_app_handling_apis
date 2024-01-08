@@ -9,4 +9,8 @@ abstract class CartRepository {
     required int quantity,
     required int cartId,
   });
+  Future<DataState<int>> addOrRemoveCart({
+    required int productId,
+    required String token,
+  });
 }

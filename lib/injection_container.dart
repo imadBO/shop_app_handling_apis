@@ -9,6 +9,7 @@ import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_c
 import 'package:shop_app_handeling_apis/features/cart/data/data_sources/remote/cart_service.dart';
 import 'package:shop_app_handeling_apis/features/cart/data/repository/cart_repository_impl.dart';
 import 'package:shop_app_handeling_apis/features/cart/domain/repository/cart_repository.dart';
+import 'package:shop_app_handeling_apis/features/cart/domain/use_cases/add_remove_cart_usecase.dart';
 import 'package:shop_app_handeling_apis/features/cart/domain/use_cases/get_carts_usecase.dart';
 import 'package:shop_app_handeling_apis/features/cart/domain/use_cases/update_cart_usecase.dart';
 import 'package:shop_app_handeling_apis/features/cart/presentation/cubits/cart_cubit.dart';
@@ -39,6 +40,7 @@ final _fetchFavoritesSl = GetIt.instance;
 final cartSl = GetIt.instance;
 final _getCartsSl = GetIt.instance;
 final _updateCartSl = GetIt.instance;
+final _addRemoveCartSl = GetIt.instance;
 Future<void> initDependencies() async {
   authSl.registerSingleton<AuthService>(AuthService());
   authSl.registerSingleton<AuthRepository>(AuthRepositoryImpl(authSl()));
@@ -85,8 +87,11 @@ Future<void> initDependencies() async {
   _updateCartSl.registerSingleton<UpdateCartUsecase>(
     UpdateCartUsecase(cartSl()),
   );
+  _addRemoveCartSl.registerSingleton<AddRemoveCartsUsecase>(
+    AddRemoveCartsUsecase(cartSl()),
+  );
   cartSl.registerSingleton<CartCubit>(
-    CartCubit(_getCartsSl(), _updateCartSl()),
+    CartCubit(_getCartsSl(), _updateCartSl(), _addRemoveCartSl()),
   );
   // homeSl.registerSingletonAsync(() async {
   //   final homeCubit = HomeCubit(homeSl());
