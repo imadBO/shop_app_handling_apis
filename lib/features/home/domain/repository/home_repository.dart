@@ -1,4 +1,5 @@
 import 'package:shop_app_handeling_apis/core/data_states.dart';
+import 'package:shop_app_handeling_apis/features/home/domain/entities/category_entity.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/entities/home_data_entity.dart';
 
 abstract class HomeRepository {
@@ -7,4 +8,5 @@ abstract class HomeRepository {
     required int productId,
     required String token,
   });
+  Future<DataState<List<CategoryEntity>>> fetchCategories();
 }

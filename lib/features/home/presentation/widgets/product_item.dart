@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:shop_app_handeling_apis/core/resources/assets_manager.dart';
 import 'package:shop_app_handeling_apis/core/resources/colors_manager.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/entities/product_entity.dart';
+import 'package:shop_app_handeling_apis/features/home/presentation/views/product_details_screen.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/widgets/favorite_button.dart';
 import 'package:shop_app_handeling_apis/models/favorites%20models/fetched_favorites_response.dart';
-import 'package:shop_app_handeling_apis/screens/product_details_screen.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({
@@ -30,7 +30,7 @@ class ProductItem extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const ProductDetailsScreen(),
+            builder: (context) => ProductDetailsScreen(product: product),
           ),
         );
         tapCallback(productId: product.id);

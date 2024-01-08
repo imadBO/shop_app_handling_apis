@@ -3,14 +3,17 @@ import 'package:shop_app_handeling_apis/core/data_states.dart';
 import 'package:shop_app_handeling_apis/core/helpers/cached_helper.dart';
 import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/entities/banner_entity.dart';
+import 'package:shop_app_handeling_apis/features/home/domain/entities/category_entity.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/entities/home_data_entity.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/entities/product_entity.dart';
+import 'package:shop_app_handeling_apis/features/home/domain/use_cases/categories_usecase.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/use_cases/home_data_usecase.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/use_cases/toggle_favorite_usecase.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_states.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
-  HomeCubit(this._homeDataUsecase, this._toggleFavoriteUsecase)
+  HomeCubit(this._homeDataUsecase, this._toggleFavoriteUsecase,
+      this._categoriesUsecase)
       : super(HomeInitialState()) {
     if (CachedHelper.getData('token') != null) {
       ftechHomeData();
@@ -21,12 +24,18 @@ class HomeCubit extends Cubit<HomeStates> {
   }
   final HomeDataUsecase _homeDataUsecase;
   final ToggleFavoriteUsecase _toggleFavoriteUsecase;
+  final CategoriesUsecase _categoriesUsecase;
   bool homeDataLoading = false;
+  bool categoriesLoading = false;
+  bool favoritesLoading = false;
   bool shouldAutoPlay = true;
   bool showActions = false;
+  int index = 0;
   HomeDataEntity? homeData;
   List<ProductEntity> homeProducts = [];
   List<BannerEntity> homeBanners = [];
+  List<CategoryEntity> categories = [];
+  List favorites = [];
 
   static HomeCubit get(context) => BlocProvider.of(context);
 
@@ -38,6 +47,17 @@ class HomeCubit extends Cubit<HomeStates> {
   void updateActionsVisibility(bool visibility) {
     showActions = visibility;
     emit(UpdateActionsVisibilityState());
+  }
+
+  void updateIndex(int newIndex) {
+    index = newIndex;
+    if (newIndex == 1 && categories.isEmpty) {
+      fetchCategories();
+    }
+    if (newIndex == 2 && favorites.isEmpty) {
+      // fetchUserFavorites();
+    }
+    emit(BottomNavUpdateIndexState());
   }
 
   Future<void> ftechHomeData() async {
@@ -77,5 +97,22 @@ class HomeCubit extends Cubit<HomeStates> {
         ToggleFavoriteErrorState(response.error ?? StringsManager.defaultError),
       );
     }
+  }
+
+  Future<void> fetchCategories() async {
+    categoriesLoading = true;
+    emit(CategoriesLoadingState());
+    final response = await _categoriesUsecase.call();
+    if (response is DataSuccess) {
+      categories = response.data!;
+      emit(CategoriesSuccessState());
+    } else {
+      if (response is DataFailureDio) {
+        emit(CategoriesErrorState(response.dioError.toString()));
+      }
+      emit(CategoriesErrorState(response.error ?? StringsManager.defaultError));
+    }
+    categoriesLoading = false;
+    emit(CategoriesLoadingState());
   }
 }

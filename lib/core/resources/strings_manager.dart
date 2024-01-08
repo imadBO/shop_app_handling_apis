@@ -27,6 +27,7 @@ class StringsManager {
       'Whether you\'re seeking a unique gift or treating yourself to something special, our e-shop has it all.';
   static const String onboardingPassage3 =
       'Enjoy seamless browsing, secure transactions, and timely delivery, all tailored to your convenience.';
+
   //Shop screen layout.
   static const String homeTitle = 'Hanout';
   static const String categoriesTitle = 'Categories';
@@ -39,6 +40,10 @@ class StringsManager {
 
   //HomeScreen.
   static const String homeProductsLabel = 'Products';
+
+  //Product details screen.
+  static const String productDetailsScreenTitle = 'Details';
+  static const String addToCartLabel = 'ADD TO CART';
 
   //Errors.
   static const String defaultError = 'Something went wrong! Try again later.';

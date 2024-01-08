@@ -9,6 +9,7 @@ import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_c
 import 'package:shop_app_handeling_apis/features/home/data/data_sources/remote/home_service.dart';
 import 'package:shop_app_handeling_apis/features/home/data/repository/home_repository_impl.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/repository/home_repository.dart';
+import 'package:shop_app_handeling_apis/features/home/domain/use_cases/categories_usecase.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/use_cases/home_data_usecase.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/use_cases/toggle_favorite_usecase.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_cubit.dart';
@@ -26,7 +27,7 @@ final searchSl = GetIt.instance;
 final homeSl = GetIt.instance;
 final _homeDataSl = GetIt.instance;
 final _toggleFavoriteSl = GetIt.instance;
-
+final _categoriesSl = GetIt.instance;
 Future<void> initDependencies() async {
   authSl.registerSingleton<AuthService>(AuthService());
   authSl.registerSingleton<AuthRepository>(AuthRepositoryImpl(authSl()));
@@ -51,8 +52,10 @@ Future<void> initDependencies() async {
   _homeDataSl.registerSingleton<HomeDataUsecase>(HomeDataUsecase(homeSl()));
   _toggleFavoriteSl.registerSingleton<ToggleFavoriteUsecase>(
       ToggleFavoriteUsecase(homeSl()));
+  _categoriesSl
+      .registerSingleton<CategoriesUsecase>(CategoriesUsecase(homeSl()));
   homeSl.registerSingleton<HomeCubit>(
-    HomeCubit(_homeDataSl(), _toggleFavoriteSl()),
+    HomeCubit(_homeDataSl(), _toggleFavoriteSl(), _categoriesSl()),
   );
   // homeSl.registerSingletonAsync(() async {
   //   final homeCubit = HomeCubit(homeSl());
