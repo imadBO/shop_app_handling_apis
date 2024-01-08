@@ -34,6 +34,28 @@ class DioHelper {
         data: data, queryParameters: query, cancelToken: cancelToken);
   }
 
+  static Future<Response> put({
+    required String endPoint,
+    Object? data,
+    Map<String, dynamic>? query,
+    String? lang,
+    String? token,
+    CancelToken? cancelToken,
+  }) async {
+    dio!.options.headers.addEntries(
+      {
+        'lang': lang,
+        'Authorization': token,
+      }.entries,
+    );
+    return await dio!.put(
+      endPoint,
+      data: data,
+      queryParameters: query,
+      cancelToken: cancelToken,
+    );
+  }
+
   static Future<Response> get({
     required String endPoint,
     Object? data,

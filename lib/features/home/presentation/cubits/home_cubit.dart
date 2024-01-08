@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_handeling_apis/core/data_states.dart';
 import 'package:shop_app_handeling_apis/core/helpers/cached_helper.dart';
 import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
+import 'package:shop_app_handeling_apis/features/cart/presentation/cubits/cart_cubit.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/entities/banner_entity.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/entities/category_entity.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/entities/home_data_entity.dart';
@@ -54,13 +56,16 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(UpdateActionsVisibilityState());
   }
 
-  void updateIndex(int newIndex) {
+  void updateIndex(int newIndex, BuildContext? context) {
     index = newIndex;
     if (newIndex == 1 && categories.isEmpty) {
       fetchCategories();
     }
     if (newIndex == 2) {
       fetchFavorites();
+    }
+    if (newIndex == 3) {
+      CartCubit.get(context).getCarts();
     }
     emit(BottomNavUpdateIndexState());
   }
