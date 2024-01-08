@@ -16,6 +16,8 @@ class AuthCubit extends Cubit<AuthStates> {
       : super(AuthInitialState());
   bool isObscured = true;
   bool isLoading = false;
+  static bool isDark = CachedHelper.getData('isDark') ?? false;
+  static bool showOnboarding = CachedHelper.getData('showOnboarding') ?? true;
   LogoutResponseModel? logoutResponseModel;
 
   static AuthCubit get(context) => BlocProvider.of(context);
@@ -75,5 +77,11 @@ class AuthCubit extends Cubit<AuthStates> {
       emit(LoadingState());
       emit(LogoutErrorState(response.error ?? StringsManager.defaultError));
     }
+  }
+
+  void toggleMode() {
+    isDark = !isDark;
+    CachedHelper.putData("isDark", isDark);
+    emit(ThemeChangedState());
   }
 }
