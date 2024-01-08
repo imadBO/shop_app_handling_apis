@@ -6,6 +6,12 @@ import 'package:shop_app_handeling_apis/features/auth/domain/use_cases/login_use
 import 'package:shop_app_handeling_apis/features/auth/domain/use_cases/logout_usecase.dart';
 import 'package:shop_app_handeling_apis/features/auth/domain/use_cases/signup_usecase.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_cubit.dart';
+import 'package:shop_app_handeling_apis/features/cart/data/data_sources/remote/cart_service.dart';
+import 'package:shop_app_handeling_apis/features/cart/data/repository/cart_repository_impl.dart';
+import 'package:shop_app_handeling_apis/features/cart/domain/repository/cart_repository.dart';
+import 'package:shop_app_handeling_apis/features/cart/domain/use_cases/get_carts_usecase.dart';
+import 'package:shop_app_handeling_apis/features/cart/domain/use_cases/update_cart_usecase.dart';
+import 'package:shop_app_handeling_apis/features/cart/presentation/cubits/cart_cubit.dart';
 import 'package:shop_app_handeling_apis/features/home/data/data_sources/remote/home_service.dart';
 import 'package:shop_app_handeling_apis/features/home/data/repository/home_repository_impl.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/repository/home_repository.dart';
@@ -30,6 +36,9 @@ final _homeDataSl = GetIt.instance;
 final _toggleFavoriteSl = GetIt.instance;
 final _categoriesSl = GetIt.instance;
 final _fetchFavoritesSl = GetIt.instance;
+final cartSl = GetIt.instance;
+final _getCartsSl = GetIt.instance;
+final _updateCartSl = GetIt.instance;
 Future<void> initDependencies() async {
   authSl.registerSingleton<AuthService>(AuthService());
   authSl.registerSingleton<AuthRepository>(AuthRepositoryImpl(authSl()));
@@ -68,6 +77,16 @@ Future<void> initDependencies() async {
       _categoriesSl(),
       _fetchFavoritesSl(),
     ),
+  );
+  // Cart.
+  cartSl.registerSingleton<CartService>(CartService());
+  cartSl.registerSingleton<CartRepository>(CartRepositoryImpl(cartSl()));
+  _getCartsSl.registerSingleton<GetCartsUsecase>(GetCartsUsecase(cartSl()));
+  _updateCartSl.registerSingleton<UpdateCartUsecase>(
+    UpdateCartUsecase(cartSl()),
+  );
+  cartSl.registerSingleton<CartCubit>(
+    CartCubit(_getCartsSl(), _updateCartSl()),
   );
   // homeSl.registerSingletonAsync(() async {
   //   final homeCubit = HomeCubit(homeSl());

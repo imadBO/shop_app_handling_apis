@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_handeling_apis/core/resources/colors_manager.dart';
 import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
+import 'package:shop_app_handeling_apis/features/cart/presentation/views/cart_screen.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_cubit.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_states.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/views/categories_screen.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/views/favorites_screen.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/views/home_screen.dart';
-import 'package:shop_app_handeling_apis/features/home/presentation/views/settings_screen.dart';
 import 'package:shop_app_handeling_apis/features/search/presentation/views/search_screen.dart';
 import 'package:shop_app_handeling_apis/features/search/presentation/widgets/search_bar.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -19,14 +19,14 @@ class ShopScreenLayout extends StatelessWidget {
     HomeScreen(),
     CategoriesScreen(),
     FavoritesScreen(),
-    SettingsScreen(),
+    CartScreen(),
   ];
 
   final List<String> titles = const [
     StringsManager.homeTitle,
     StringsManager.categoriesTitle,
     StringsManager.favoritesTitle,
-    StringsManager.settingsTitle,
+    StringsManager.cartTitle,
   ];
   final TextEditingController searchController = TextEditingController();
 
@@ -105,7 +105,7 @@ class ShopScreenLayout extends StatelessWidget {
           ),
           bottomNavigationBar: NavigationBar(
             onDestinationSelected: (value) {
-              homeCubit.updateIndex(value);
+              homeCubit.updateIndex(value, context);
             },
             selectedIndex: homeCubit.index,
             destinations: const [
@@ -134,12 +134,12 @@ class ShopScreenLayout extends StatelessWidget {
                 label: StringsManager.favoritesTitle,
               ),
               NavigationDestination(
-                icon: Icon(Icons.settings_outlined),
+                icon: Icon(Icons.shopping_cart_outlined),
                 selectedIcon: Icon(
-                  Icons.settings,
+                  Icons.shopping_cart,
                   color: ColorsManager.primary,
                 ),
-                label: StringsManager.settingsTitle,
+                label: StringsManager.cartTitle,
               ),
             ],
           ),

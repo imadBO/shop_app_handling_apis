@@ -33,6 +33,7 @@ class StringsManager {
   static const String categoriesTitle = 'Categories';
   static const String favoritesTitle = 'Favorites';
   static const String settingsTitle = 'Settings';
+  static const String cartTitle = 'Carts';
 
   //Search Screen.
   static const String searchBarHint = 'Search';
@@ -48,6 +49,11 @@ class StringsManager {
   //Favorites screen.
   static const String noFavorites =
       'No items found ! Go ahead and like some ...';
+
+  //Carts screen.
+  static const String emptyCartLabel = 'No items! Add some ...';
+  static const String cartSuccessFullyUpdated =
+      "Cart has been successfully update";
 
   //Errors.
   static const String defaultError = 'Something went wrong! Try again later.';

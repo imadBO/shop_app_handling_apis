@@ -17,4 +17,5 @@ class ColorsManager {
   static const Color darkThemePrimaryText = Color(0xffe4e6eb);
   static const Color darkThemeSecondaryText = Color(0xffb0b3b8);
   static const MaterialColor deepPurple = Colors.deepPurple;
+  static const Color green = Colors.green;
 }

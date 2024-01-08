@@ -8,6 +8,7 @@ import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_c
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/login_screen.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/onboarding_screen.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/shop_screen_layout.dart';
+import 'package:shop_app_handeling_apis/features/cart/presentation/cubits/cart_cubit.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_cubit.dart';
 import 'package:shop_app_handeling_apis/features/search/presentation/cubits/search_cubit.dart';
 import 'package:shop_app_handeling_apis/injection_container.dart';
@@ -23,8 +24,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -32,6 +31,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (BuildContext context) => authSl<AuthCubit>()),
         BlocProvider(create: (BuildContext context) => searchSl<SearchCubit>()),
         BlocProvider(create: (BuildContext context) => homeSl<HomeCubit>()),
+        BlocProvider(create: (BuildContext context) => cartSl<CartCubit>()),
       ],
       child: MaterialApp(
         title: 'Shop app',
