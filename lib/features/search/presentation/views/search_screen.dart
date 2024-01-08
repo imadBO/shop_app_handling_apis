@@ -79,7 +79,8 @@ class SearchScreen extends StatelessWidget {
                               },
                               itemCount: searchCubit.searchResult.length,
                             );
-                          }),
+                          },
+                        ),
             );
           },
         );

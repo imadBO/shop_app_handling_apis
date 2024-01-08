@@ -12,6 +12,21 @@ class StringsManager {
   static const String passwordLabel = 'Password';
   static const String confirmPwdLabel = 'Confirm password';
 
+  //Onboarding screen.
+  static const String skipButtonLabel = 'SKIP';
+  static const String getStartedButtonLabel = 'SKIP';
+  static const String onboardingTitle1 =
+      'Welcome to the Ultimate Shopping Experience!';
+  static const String onboardingTitle2 =
+      'Unleash Your Inner Shopper: Discover Our E-Shop Wonderland!';
+  static const String onboardingTitle3 =
+      'Step into the World of Endless Choices: Your E-Shop Journey Begins!';
+  static const String onboardingPassage1 =
+      'Every click, swipe, and tap is a step towards discovering the latest trends, exclusive deals, and a world of products at your fingertips.';
+  static const String onboardingPassage2 =
+      'Whether you\'re seeking a unique gift or treating yourself to something special, our e-shop has it all.';
+  static const String onboardingPassage3 =
+      'Enjoy seamless browsing, secure transactions, and timely delivery, all tailored to your convenience.';
   //Shop screen layout.
   static const String homeTitle = 'Hanout';
   static const String categoriesTitle = 'Categories';

@@ -37,3 +37,5 @@ class LogoutErrorState extends AuthStates {
   LogoutErrorState(this.error);
   final String error;
 }
+
+class ThemeChangedState extends AuthStates{}
