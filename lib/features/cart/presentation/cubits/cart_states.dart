@@ -24,13 +24,22 @@ class CartUpdateErrorState extends CartStates {
 
 class RealTimeQuantityUpdate extends CartStates {}
 
-class AddRemoveCartSuccessState extends CartStates {}
+class AddToCartSuccessState extends CartStates {}
 
-class AddRemoveCartErrorState extends CartStates {
+class AddToCartErrorState extends CartStates {
   final String error;
-  AddRemoveCartErrorState(this.error);
+  AddToCartErrorState(this.error);
 }
 
-class RealTimeAddRemoveUpdate extends CartStates {}
+class RealTimeAddToCartUpdate extends CartStates {}
 
 class AdiingRemovingLoadingState extends CartStates {}
+
+class RemoveFromCartSuccessState extends CartStates {}
+
+class RemoveFromCartErrorState extends CartStates {
+  final String error;
+  RemoveFromCartErrorState(this.error);
+}
+
+class RealTimeRemoveFromCartUpdate extends CartStates {}

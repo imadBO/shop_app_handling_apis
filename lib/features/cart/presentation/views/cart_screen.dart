@@ -35,6 +35,13 @@ class CartScreen extends StatelessWidget {
             textColor: ColorsManager.white,
           );
         }
+        if (state is RemoveFromCartErrorState) {
+          Fluttertoast.showToast(
+            msg: state.error,
+            backgroundColor: ColorsManager.error,
+            textColor: ColorsManager.white,
+          );
+        }
       },
       builder: (context, state) {
         final cartCubit = CartCubit.get(context);

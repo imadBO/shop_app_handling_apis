@@ -37,4 +37,15 @@ class CartService {
       lang: Langs.english.getString(),
     );
   }
+
+  Future<Response> removeCart({
+    required int cartId,
+    required String token,
+  }) async {
+    return await DioHelper.delete(
+      endPoint: '${AppConstants.cartsEndpoint}/$cartId',
+      token: token,
+      lang: Langs.english.toString(),
+    );
+  }
 }
