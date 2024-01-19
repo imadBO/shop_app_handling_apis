@@ -45,7 +45,7 @@ class StringsManager {
   //Product details screen.
   static const String productDetailsScreenTitle = 'Details';
   static const String addToCartLabel = 'ADD TO CART';
-  static const String removeFromCartLabel = 'REMOVE FROM CART';
+  static const String updateCartLabel = 'UPDATE CART';
 
   //Favorites screen.
   static const String noFavorites =

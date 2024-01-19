@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app_handeling_apis/core/resources/colors_manager.dart';
 import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
+import 'package:shop_app_handeling_apis/features/cart/domain/entities/cart_item_entity.dart';
 import 'package:shop_app_handeling_apis/features/cart/presentation/cubits/cart_cubit.dart';
 import 'package:shop_app_handeling_apis/features/cart/presentation/cubits/cart_states.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/entities/product_entity.dart';
@@ -20,6 +21,26 @@ class CartManagementBar extends StatefulWidget {
 
 class _CartManagementBarState extends State<CartManagementBar> {
   int quantity = 1;
+  bool loading = false;
+  CartItemEntity? cartItem;
+
+  @override
+  void initState() {
+    if (widget.product.inCart) {
+      loading = true;
+      final cartCubit = CartCubit.get(context);
+      cartCubit.getCarts().then((value) {
+        cartItem = cartCubit.cartEntity?.cartItems
+            .firstWhere((element) => element.product.id == widget.product.id);
+        quantity = cartItem?.quantity ?? 1;
+        setState(() {
+          loading = false;
+        });
+      });
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +57,7 @@ class _CartManagementBarState extends State<CartManagementBar> {
       padding: const EdgeInsets.all(5),
       child: BlocConsumer<CartCubit, CartStates>(
         listener: (context, state) {
-          if (state is AddRemoveCartSuccessState ||
+          if (state is AddToCartSuccessState ||
               state is CartUpdateSuccessState) {
             Fluttertoast.showToast(
               msg: StringsManager.cartSuccessFullyUpdated,
@@ -44,7 +65,7 @@ class _CartManagementBarState extends State<CartManagementBar> {
               textColor: ColorsManager.white,
             );
           }
-          if (state is AddRemoveCartErrorState) {
+          if (state is AddToCartErrorState) {
             Fluttertoast.showToast(
               msg: state.error,
               backgroundColor: ColorsManager.error,
@@ -87,14 +108,22 @@ class _CartManagementBarState extends State<CartManagementBar> {
                       ),
                     ),
                     const Spacer(),
-                    Text(
-                      quantity.toString(),
-                      style: const TextStyle(
-                        color: ColorsManager.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    loading
+                        ? const SizedBox(
+                            height: 10,
+                            width: 10,
+                            child: CircularProgressIndicator(
+                              color: ColorsManager.white,
+                            ),
+                          )
+                        : Text(
+                            quantity.toString(),
+                            style: const TextStyle(
+                              color: ColorsManager.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                     const Spacer(),
                     GestureDetector(
                       onTap: () {
@@ -118,7 +147,12 @@ class _CartManagementBarState extends State<CartManagementBar> {
                   height: 50,
                   child: FilledButton(
                     onPressed: () {
-                      cartCubit.addRemoveCart(widget.product, quantity);
+                      widget.product.inCart
+                          ? cartCubit.updateCart(
+                              item: cartItem!,
+                              newQuantity: quantity,
+                            )
+                          : cartCubit.addToCart(widget.product, quantity);
                     },
                     style: const ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll(
@@ -126,7 +160,7 @@ class _CartManagementBarState extends State<CartManagementBar> {
                       ),
                       shape: MaterialStatePropertyAll(StadiumBorder()),
                     ),
-                    child: cartCubit.addingRemovingLoading
+                    child: cartCubit.addingRemovingLoading || cartCubit.updating
                         ? const Center(
                             child: CircularProgressIndicator(
                               color: ColorsManager.primary,
@@ -134,7 +168,7 @@ class _CartManagementBarState extends State<CartManagementBar> {
                           )
                         : Text(
                             widget.product.inCart
-                                ? StringsManager.removeFromCartLabel
+                                ? StringsManager.updateCartLabel
                                 : StringsManager.addToCartLabel,
                             textAlign: TextAlign.center,
                             style: const TextStyle(

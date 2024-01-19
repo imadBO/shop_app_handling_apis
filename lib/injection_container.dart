@@ -10,6 +10,7 @@ import 'package:shop_app_handeling_apis/features/cart/data/data_sources/remote/c
 import 'package:shop_app_handeling_apis/features/cart/data/repository/cart_repository_impl.dart';
 import 'package:shop_app_handeling_apis/features/cart/domain/repository/cart_repository.dart';
 import 'package:shop_app_handeling_apis/features/cart/domain/use_cases/add_remove_cart_usecase.dart';
+import 'package:shop_app_handeling_apis/features/cart/domain/use_cases/delete_cart_usecase.dart';
 import 'package:shop_app_handeling_apis/features/cart/domain/use_cases/get_carts_usecase.dart';
 import 'package:shop_app_handeling_apis/features/cart/domain/use_cases/update_cart_usecase.dart';
 import 'package:shop_app_handeling_apis/features/cart/presentation/cubits/cart_cubit.dart';
@@ -28,27 +29,21 @@ import 'package:shop_app_handeling_apis/features/search/domain/use_cases/search_
 import 'package:shop_app_handeling_apis/features/search/presentation/cubits/search_cubit.dart';
 
 final authSl = GetIt.instance;
-final _loginSl = GetIt.instance;
-final _logoutSl = GetIt.instance;
-final _signupSl = GetIt.instance;
 final searchSl = GetIt.instance;
 final homeSl = GetIt.instance;
-final _homeDataSl = GetIt.instance;
-final _toggleFavoriteSl = GetIt.instance;
-final _categoriesSl = GetIt.instance;
-final _fetchFavoritesSl = GetIt.instance;
 final cartSl = GetIt.instance;
-final _getCartsSl = GetIt.instance;
-final _updateCartSl = GetIt.instance;
-final _addRemoveCartSl = GetIt.instance;
 Future<void> initDependencies() async {
   authSl.registerSingleton<AuthService>(AuthService());
   authSl.registerSingleton<AuthRepository>(AuthRepositoryImpl(authSl()));
-  _loginSl.registerSingleton<LoginUsecase>(LoginUsecase(authSl()));
-  _signupSl.registerSingleton<SignupUsecase>(SignupUsecase(authSl()));
-  _logoutSl.registerSingleton<LogoutUsecase>(LogoutUsecase(authSl()));
+  authSl.registerSingleton<LoginUsecase>(LoginUsecase(authSl()));
+  authSl.registerSingleton<SignupUsecase>(SignupUsecase(authSl()));
+  authSl.registerSingleton<LogoutUsecase>(LogoutUsecase(authSl()));
   authSl.registerSingleton<AuthCubit>(
-    AuthCubit(_loginSl(), _signupSl(), _logoutSl()),
+    AuthCubit(
+      authSl<LoginUsecase>(),
+      authSl<SignupUsecase>(),
+      authSl<LogoutUsecase>(),
+    ),
   );
 
   // Search.
@@ -62,40 +57,45 @@ Future<void> initDependencies() async {
   // Home.
   homeSl.registerSingleton<HomeService>(HomeService());
   homeSl.registerSingleton<HomeRepository>(HomeRepositoryImpl(homeSl()));
-  _homeDataSl.registerSingleton<HomeDataUsecase>(HomeDataUsecase(homeSl()));
-  _toggleFavoriteSl.registerSingleton<ToggleFavoriteUsecase>(
+  homeSl.registerSingleton<HomeDataUsecase>(HomeDataUsecase(homeSl()));
+  homeSl.registerSingleton<ToggleFavoriteUsecase>(
     ToggleFavoriteUsecase(homeSl()),
   );
-  _categoriesSl.registerSingleton<CategoriesUsecase>(
+  homeSl.registerSingleton<CategoriesUsecase>(
     CategoriesUsecase(homeSl()),
   );
-  _fetchFavoritesSl.registerSingleton<FetchFavoritesUsecase>(
+  homeSl.registerSingleton<FetchFavoritesUsecase>(
     FetchFavoritesUsecase(homeSl()),
   );
   homeSl.registerSingleton<HomeCubit>(
     HomeCubit(
-      _homeDataSl(),
-      _toggleFavoriteSl(),
-      _categoriesSl(),
-      _fetchFavoritesSl(),
+      homeSl<HomeDataUsecase>(),
+      homeSl<ToggleFavoriteUsecase>(),
+      homeSl<CategoriesUsecase>(),
+      homeSl<FetchFavoritesUsecase>(),
     ),
   );
   // Cart.
   cartSl.registerSingleton<CartService>(CartService());
   cartSl.registerSingleton<CartRepository>(CartRepositoryImpl(cartSl()));
-  _getCartsSl.registerSingleton<GetCartsUsecase>(GetCartsUsecase(cartSl()));
-  _updateCartSl.registerSingleton<UpdateCartUsecase>(
-    UpdateCartUsecase(cartSl()),
+  cartSl.registerSingleton<GetCartsUsecase>(
+    GetCartsUsecase(cartSl<CartRepository>()),
   );
-  _addRemoveCartSl.registerSingleton<AddRemoveCartsUsecase>(
-    AddRemoveCartsUsecase(cartSl()),
+  cartSl.registerSingleton<UpdateCartUsecase>(
+    UpdateCartUsecase(cartSl<CartRepository>()),
+  );
+  cartSl.registerSingleton<AddToCartsUsecase>(
+    AddToCartsUsecase(cartSl<CartRepository>()),
+  );
+  cartSl.registerSingleton<DeleteFromCartsUsecase>(
+    DeleteFromCartsUsecase(cartSl<CartRepository>()),
   );
   cartSl.registerSingleton<CartCubit>(
-    CartCubit(_getCartsSl(), _updateCartSl(), _addRemoveCartSl()),
+    CartCubit(
+      cartSl<GetCartsUsecase>(),
+      cartSl<UpdateCartUsecase>(),
+      cartSl<AddToCartsUsecase>(),
+      cartSl<DeleteFromCartsUsecase>(),
+    ),
   );
-  // homeSl.registerSingletonAsync(() async {
-  //   final homeCubit = HomeCubit(homeSl());
-  //   await homeCubit.ftechHomeData();
-  //   return homeCubit;
-  // });
 }

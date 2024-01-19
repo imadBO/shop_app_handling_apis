@@ -52,9 +52,20 @@ class CartItem extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-                    const Expanded(
+                    Expanded(
                       flex: 1,
-                      child: Icon(Icons.close),
+                      child: BlocConsumer<CartCubit, CartStates>(
+                        builder: (BuildContext context, state) {
+                          final cubit = CartCubit.get(context);
+                          return GestureDetector(
+                            onTap: () {
+                              cubit.removeCart(cartItemEntity, context);
+                            },
+                            child: const Icon(Icons.close),
+                          );
+                        },
+                        listener: (BuildContext context, state) {},
+                      ),
                     ),
                   ],
                 ),

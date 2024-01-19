@@ -9,8 +9,13 @@ abstract class CartRepository {
     required int quantity,
     required int cartId,
   });
-  Future<DataState<int>> addOrRemoveCart({
+  Future<DataState<int>> addToCart({
     required int productId,
+    required String token,
+  });
+
+  Future<DataState<UpdateCartEntity>> removeFromCart({
+    required int cartId,
     required String token,
   });
 }

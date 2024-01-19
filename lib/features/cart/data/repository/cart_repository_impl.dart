@@ -53,7 +53,7 @@ class CartRepositoryImpl implements CartRepository {
   }
 
   @override
-  Future<DataState<int>> addOrRemoveCart({
+  Future<DataState<int>> addToCart({
     required int productId,
     required String token,
   }) async {
@@ -64,6 +64,29 @@ class CartRepositoryImpl implements CartRepository {
       );
       if (response.data['status'] == true) {
         return DataSuccess(response.data['data']['id']);
+      } else {
+        return DataFailure(response.data['message']);
+      }
+    } catch (error) {
+      if (error is DioException) {
+        return DataFailureDio(error);
+      }
+      return DataFailure(error.toString());
+    }
+  }
+
+  @override
+  Future<DataState<UpdateCartEntity>> removeFromCart({
+    required int cartId,
+    required String token,
+  }) async {
+    try {
+      final response = await _cartService.removeCart(
+        cartId: cartId,
+        token: token,
+      );
+      if (response.data['status'] == true) {
+        return DataSuccess(UpdateCartModel.fromJSON(response.data['data']));
       } else {
         return DataFailure(response.data['message']);
       }
