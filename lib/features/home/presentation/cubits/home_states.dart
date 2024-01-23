@@ -43,3 +43,21 @@ class FavoritesErrorState extends HomeStates {
 }
 
 class FavoritesLoadingState extends HomeStates {}
+
+class ProductDetailsSuccessState extends HomeStates {}
+
+class ProductDetailsErrorState extends HomeStates {
+  final String error;
+  ProductDetailsErrorState(this.error);
+}
+
+class ProductDetailsLoadingState extends HomeStates {}
+
+class CategoryProductsSuccessState extends HomeStates {}
+
+class CategoryProductsErrorState extends HomeStates {
+  final String error;
+  CategoryProductsErrorState(this.error);
+}
+
+class CategoryProductsLoadingState extends HomeStates {}

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_handeling_apis/core/helpers/cached_helper.dart';
 import 'package:shop_app_handeling_apis/core/helpers/dio_helper.dart';
 import 'package:shop_app_handeling_apis/core/helpers/observer.dart';
+import 'package:shop_app_handeling_apis/core/resources/routes_manager.dart';
 import 'package:shop_app_handeling_apis/core/resources/themes_manager.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/login_screen.dart';
@@ -39,6 +40,8 @@ class MyApp extends StatelessWidget {
         theme: lightTheme,
         darkTheme: darkTheme,
         themeMode: AuthCubit.isDark ? ThemeMode.dark : ThemeMode.light,
+        onGenerateRoute: RouteGenerator.getRoute,
+        initialRoute: Routes.shopScreenLayoutRoute,
         home: AuthCubit.showOnboarding
             ? const OnboardingScreen()
             : CachedHelper.getData('token') != null

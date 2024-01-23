@@ -13,4 +13,13 @@ abstract class HomeRepository {
   Future<DataState<List<ProductEntity>>> fetchFavorites({
     required String token,
   });
+  Future<DataState<ProductEntity>> fetchProductDetails({
+    required String token,
+    required int productId,
+  });
+
+  Future<DataState<List<ProductEntity>>> fetchCategoryProducts({
+    required String token,
+    required int categoryId,
+  });
 }
