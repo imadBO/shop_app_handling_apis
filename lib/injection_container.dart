@@ -18,8 +18,10 @@ import 'package:shop_app_handeling_apis/features/home/data/data_sources/remote/h
 import 'package:shop_app_handeling_apis/features/home/data/repository/home_repository_impl.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/repository/home_repository.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/use_cases/categories_usecase.dart';
+import 'package:shop_app_handeling_apis/features/home/domain/use_cases/category_products_usecase.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/use_cases/fetch_favorites_usecase.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/use_cases/home_data_usecase.dart';
+import 'package:shop_app_handeling_apis/features/home/domain/use_cases/product_details_usecase.dart';
 import 'package:shop_app_handeling_apis/features/home/domain/use_cases/toggle_favorite_usecase.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_cubit.dart';
 import 'package:shop_app_handeling_apis/features/search/data/data_sources/remote/search_service.dart';
@@ -57,15 +59,25 @@ Future<void> initDependencies() async {
   // Home.
   homeSl.registerSingleton<HomeService>(HomeService());
   homeSl.registerSingleton<HomeRepository>(HomeRepositoryImpl(homeSl()));
-  homeSl.registerSingleton<HomeDataUsecase>(HomeDataUsecase(homeSl()));
+  homeSl.registerSingleton<HomeDataUsecase>(
+    HomeDataUsecase(homeSl<HomeRepository>()),
+  );
   homeSl.registerSingleton<ToggleFavoriteUsecase>(
     ToggleFavoriteUsecase(homeSl()),
   );
   homeSl.registerSingleton<CategoriesUsecase>(
-    CategoriesUsecase(homeSl()),
+    CategoriesUsecase(
+      homeSl<HomeRepository>(),
+    ),
   );
   homeSl.registerSingleton<FetchFavoritesUsecase>(
-    FetchFavoritesUsecase(homeSl()),
+    FetchFavoritesUsecase(homeSl<HomeRepository>()),
+  );
+  homeSl.registerSingleton<ProductDetailsUsecase>(
+    ProductDetailsUsecase(homeSl<HomeRepository>()),
+  );
+  homeSl.registerSingleton<FetchCategoryProductsUsecase>(
+    FetchCategoryProductsUsecase(homeSl<HomeRepository>()),
   );
   homeSl.registerSingleton<HomeCubit>(
     HomeCubit(
@@ -73,8 +85,11 @@ Future<void> initDependencies() async {
       homeSl<ToggleFavoriteUsecase>(),
       homeSl<CategoriesUsecase>(),
       homeSl<FetchFavoritesUsecase>(),
+      homeSl<ProductDetailsUsecase>(),
+      homeSl<FetchCategoryProductsUsecase>(),
     ),
   );
+
   // Cart.
   cartSl.registerSingleton<CartService>(CartService());
   cartSl.registerSingleton<CartRepository>(CartRepositoryImpl(cartSl()));

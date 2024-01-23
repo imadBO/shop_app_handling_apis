@@ -1,4 +1,5 @@
 class StringsManager {
+  static const String undefinedRoute = 'Oops! undefined route';
   //Auth form.
   static const String loginPageLabel = 'Login';
   static const String loginButtonLabel = 'LOGIN';
@@ -56,6 +57,9 @@ class StringsManager {
   static const String cartSuccessFullyUpdated =
       "Cart has been successfully update";
   static const String checkOutLabel = 'CHECKOUT FOR ';
+
+  //Category products screen.
+  static const String categoryEmpty = 'No products found for this category!';
   //Errors.
   static const String defaultError = 'Something went wrong! Try again later.';
   static const String emailEmpty = "Email must not be empty";

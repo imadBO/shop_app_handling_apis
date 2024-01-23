@@ -93,4 +93,52 @@ class HomeRepositoryImpl implements HomeRepository {
       return DataFailure(error.toString());
     }
   }
+
+  @override
+  Future<DataState<ProductEntity>> fetchProductDetails(
+      {required String token, required int productId}) async {
+    try {
+      final response = await _homeService.fetchProductDetails(
+        token: token,
+        productId: productId,
+      );
+      if (response.data['status'] == true) {
+        return DataSuccess(ProductModel.fromJSON(response.data['data']));
+      } else {
+        return DataFailure(response.data['message']);
+      }
+    } catch (error) {
+      if (error is DioException) {
+        return DataFailureDio(error);
+      }
+      return DataFailure(error.toString());
+    }
+  }
+
+  @override
+  Future<DataState<List<ProductEntity>>> fetchCategoryProducts({
+    required String token,
+    required int categoryId,
+  }) async {
+    try {
+      final categoryProducts = <ProductModel>[];
+      final response = await _homeService.fetchCategoryProducts(
+        token: token,
+        categoryId: categoryId,
+      );
+      if (response.data['status'] == true) {
+        response.data['data']['data'].forEach((element) {
+          categoryProducts.add(ProductModel.fromJSON(element));
+        });
+        return DataSuccess(categoryProducts);
+      } else {
+        return DataFailure(response.data['message']);
+      }
+    } catch (error) {
+      if (error is DioException) {
+        return DataFailureDio(error);
+      }
+      return DataFailure(error.toString());
+    }
+  }
 }

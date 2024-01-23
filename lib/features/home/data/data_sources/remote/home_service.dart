@@ -39,4 +39,22 @@ class HomeService {
       token: token,
     );
   }
+
+  Future<Response> fetchProductDetails(
+      {required String token, required int productId}) async {
+    return await DioHelper.get(
+      endPoint: '${AppConstants.productDetailsEndpoint}/$productId',
+      token: token,
+      lang: Langs.english.getString(),
+    );
+  }
+
+  Future<Response> fetchCategoryProducts(
+      {required token, required categoryId}) async {
+    return await DioHelper.get(
+      endPoint: '${AppConstants.categoriesEndpoint}/$categoryId',
+      token: token,
+      lang: Langs.english.getString(),
+    );
+  }
 }
