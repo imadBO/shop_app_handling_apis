@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
+import 'package:shop_app_handeling_apis/features/account/presentation/views/profile_screen.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/login_screen.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/onboarding_screen.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/register_screen.dart';
@@ -17,6 +18,7 @@ class Routes {
   static const String homeRoute = '/home';
   static const String detailsRoute = '/detailsRoute';
   static const String categoryProductsRoute = '/categoryProducts';
+  static const String profileRoute = '/profile';
 }
 
 class RouteGenerator {
@@ -53,6 +55,10 @@ class RouteGenerator {
           builder: (context) => CategoryProductsScreen(
             categoryName: settings.arguments as String,
           ),
+        );
+      case Routes.profileRoute:
+        return MaterialPageRoute(
+          builder: (context) => const ProfileScreen(),
         );
       default:
         return MaterialPageRoute(

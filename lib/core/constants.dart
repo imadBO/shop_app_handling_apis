@@ -14,4 +14,5 @@ class AppConstants {
   static const categoriesEndpoint = 'categories';
   static const cartsEndpoint = 'carts';
   static const productDetailsEndpoint = 'products';
+  static const profileEndpoint = 'profile';
 }

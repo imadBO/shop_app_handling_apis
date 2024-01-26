@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_handeling_apis/core/resources/colors_manager.dart';
+import 'package:shop_app_handeling_apis/core/resources/routes_manager.dart';
 import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
+import 'package:shop_app_handeling_apis/features/account/presentation/cubits/account_cubit.dart';
+import 'package:shop_app_handeling_apis/features/account/presentation/cubits/account_states.dart';
 import 'package:shop_app_handeling_apis/features/cart/presentation/views/cart_screen.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_cubit.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_states.dart';
@@ -53,6 +56,23 @@ class ShopScreenLayout extends StatelessWidget {
                     ),
                     title: Text(
                       titles[homeCubit.index],
+                    ),
+                    leading: BlocConsumer<AccountCubit, AccountStates>(
+                      listener: (context, state) {},
+                      builder: (BuildContext context, state) {
+                        final accountCubit = AccountCubit.get(context);
+                        return IconButton(
+                          onPressed: () {
+                            accountCubit.getProfile();
+                            Navigator.of(context).pushNamed(
+                              Routes.profileRoute,
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.person_2_outlined,
+                          ),
+                        );
+                      },
                     ),
                     actions: [
                       Visibility(
