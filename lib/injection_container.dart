@@ -1,4 +1,9 @@
 import 'package:get_it/get_it.dart';
+import 'package:shop_app_handeling_apis/features/account/data/data_sources/remote/account_service.dart';
+import 'package:shop_app_handeling_apis/features/account/data/repository/account_repository_impl.dart';
+import 'package:shop_app_handeling_apis/features/account/domain/repository/account_repository.dart';
+import 'package:shop_app_handeling_apis/features/account/domain/use_cases/get_profile_usecase.dart';
+import 'package:shop_app_handeling_apis/features/account/presentation/cubits/account_cubit.dart';
 import 'package:shop_app_handeling_apis/features/auth/data/data_sources/remote/auth_services.dart';
 import 'package:shop_app_handeling_apis/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:shop_app_handeling_apis/features/auth/domain/repository/auth_repository.dart';
@@ -34,6 +39,7 @@ final authSl = GetIt.instance;
 final searchSl = GetIt.instance;
 final homeSl = GetIt.instance;
 final cartSl = GetIt.instance;
+final accountSl = GetIt.instance;
 Future<void> initDependencies() async {
   authSl.registerSingleton<AuthService>(AuthService());
   authSl.registerSingleton<AuthRepository>(AuthRepositoryImpl(authSl()));
@@ -112,5 +118,17 @@ Future<void> initDependencies() async {
       cartSl<AddToCartsUsecase>(),
       cartSl<DeleteFromCartsUsecase>(),
     ),
+  );
+
+  // Account.
+  accountSl.registerSingleton<AccountService>(AccountService());
+  accountSl.registerSingleton<AccountRepository>(
+    AccountRepositoryImpl(accountSl<AccountService>()),
+  );
+  accountSl.registerSingleton<GetProfileUsecase>(
+    GetProfileUsecase(accountSl<AccountRepository>()),
+  );
+  accountSl.registerSingleton<AccountCubit>(
+    AccountCubit(accountSl<GetProfileUsecase>()),
   );
 }

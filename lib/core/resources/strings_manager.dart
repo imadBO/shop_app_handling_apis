@@ -60,6 +60,15 @@ class StringsManager {
 
   //Category products screen.
   static const String categoryEmpty = 'No products found for this category!';
+
+  //Profile screen.
+  static const String accountTitle = 'Account';
+  static const String profileLabel = 'Profile';
+  static const String manageUserLabel = 'Manage user';
+  static const String ordersLabel = 'My orders';
+  static const String changePwdLabel = 'Change password';
+  static const String themeLabel = 'Change theme';
+  static const String logoutLabel = 'Logout';
   //Errors.
   static const String defaultError = 'Something went wrong! Try again later.';
   static const String emailEmpty = "Email must not be empty";

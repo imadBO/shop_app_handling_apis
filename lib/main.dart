@@ -5,6 +5,7 @@ import 'package:shop_app_handeling_apis/core/helpers/dio_helper.dart';
 import 'package:shop_app_handeling_apis/core/helpers/observer.dart';
 import 'package:shop_app_handeling_apis/core/resources/routes_manager.dart';
 import 'package:shop_app_handeling_apis/core/resources/themes_manager.dart';
+import 'package:shop_app_handeling_apis/features/account/presentation/cubits/account_cubit.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/login_screen.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/onboarding_screen.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (BuildContext context) => searchSl<SearchCubit>()),
         BlocProvider(create: (BuildContext context) => homeSl<HomeCubit>()),
         BlocProvider(create: (BuildContext context) => cartSl<CartCubit>()),
+        BlocProvider(create: (BuildContext context) => accountSl<AccountCubit>())
       ],
       child: MaterialApp(
         title: 'Shop app',
