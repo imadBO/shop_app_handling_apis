@@ -28,11 +28,11 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<DataState<UserEntity>> logout({required Map userData}) async {
+  Future<DataState<bool>> logout({required String token}) async {
     try {
-      final response = await _authService.logout(token: userData['token']);
+      final response = await _authService.logout(token: token);
       if (response.data['status'] == true) {
-        return DataSuccess(UserModel.fromJSON(userData['data']));
+        return const DataSuccess(true);
       } else {
         return DataFailure(response.data['message']);
       }

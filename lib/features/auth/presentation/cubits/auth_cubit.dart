@@ -61,16 +61,20 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 
-  Future<void> logout({required Map userData}) async {
+  Future<void> logout() async {
     isLoading = true;
     emit(LoadingState());
-    final response = await _logoutUsecase.call(params: userData);
+    String tempToken = CachedHelper.getData('token');
+    await CachedHelper.deleteData('token');
+    final response = await _logoutUsecase.call(
+      params: tempToken,
+    );
     if (response is DataSuccess) {
-      await CachedHelper.deleteData('token');
       isLoading = false;
       emit(LoadingState());
       emit(LogoutSuccessState(response.data!));
     } else {
+      await CachedHelper.putData('token', tempToken);
       isLoading = false;
       emit(LoadingState());
       emit(LogoutErrorState(response.error ?? StringsManager.defaultError));

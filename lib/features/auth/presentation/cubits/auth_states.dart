@@ -29,8 +29,8 @@ class RegisterErrorState extends AuthStates {
 }
 
 class LogoutSuccessState extends AuthStates {
-  LogoutSuccessState(this.userEntity);
-  final UserEntity userEntity;
+  LogoutSuccessState(this.loggedOut);
+  final bool loggedOut;
 }
 
 class LogoutErrorState extends AuthStates {

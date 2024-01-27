@@ -45,7 +45,7 @@ class ShopScreenLayout extends StatelessWidget {
               headerSliverBuilder: (context, innerBoxIsScrolled) {
                 return [
                   SliverAppBar(
-                    expandedHeight: 100,
+                    expandedHeight: homeCubit.index == 0 ? 100 : 0,
                     floating: true,
                     snap: true,
                     pinned: true,
@@ -74,49 +74,55 @@ class ShopScreenLayout extends StatelessWidget {
                         );
                       },
                     ),
-                    actions: [
-                      Visibility(
-                        visible: homeCubit.showActions,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const SearchScreen(),
+                    actions: homeCubit.index == 0
+                        ? [
+                            Visibility(
+                              visible: homeCubit.showActions,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SearchScreen(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Icon(Icons.search),
                                 ),
-                              );
-                            },
-                            child: const Icon(Icons.search),
-                          ),
-                        ),
-                      ),
-                    ],
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Column(
-                        children: [
-                          const SizedBox(
-                            height: 40,
-                          ),
-                          VisibilityDetector(
-                            key: const Key('FlexibleSpaceBar-key'),
-                            onVisibilityChanged: (VisibilityInfo info) {
-                              homeCubit.updateActionsVisibility(
-                                  (info.visibleFraction == 0));
-                            },
-                            child: CustomSearchBar(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => const SearchScreen(),
-                                  ),
-                                );
-                              },
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
+                          ]
+                        : null,
+                    flexibleSpace: homeCubit.index == 0
+                        ? FlexibleSpaceBar(
+                            background: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 40,
+                                ),
+                                VisibilityDetector(
+                                  key: const Key('FlexibleSpaceBar-key'),
+                                  onVisibilityChanged: (VisibilityInfo info) {
+                                    homeCubit.updateActionsVisibility(
+                                        (info.visibleFraction == 0));
+                                  },
+                                  child: CustomSearchBar(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SearchScreen(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : null,
                   ),
                 ];
               },

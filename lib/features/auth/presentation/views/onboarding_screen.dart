@@ -51,6 +51,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               onPressed: () {
                 getStarted(context);
               },
+              style: TextButton.styleFrom(
+                foregroundColor: ColorsManager.primary,
+              ),
               child: const Row(
                 children: [
                   Text(StringsManager.skipButtonLabel),
@@ -105,6 +108,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ? SmoothPageIndicator(
                     controller: pageController,
                     count: 3,
+                    effect: const WormEffect(
+                      dotColor: ColorsManager.lightGrey,
+                      activeDotColor: ColorsManager.primary,
+                      radius: 8,
+                      dotHeight: 8,
+                      dotWidth: 8,
+                      spacing: 4,
+                    ),
                   )
                 : MaterialButton(
                     color: ColorsManager.primary,

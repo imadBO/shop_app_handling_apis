@@ -7,5 +7,5 @@ abstract class AuthRepository {
     required String password,
   });
   Future<DataState<UserEntity>> register({required Map userData});
-  Future<DataState<UserEntity>> logout({required Map userData});
+  Future<DataState<bool>> logout({required String token});
 }
