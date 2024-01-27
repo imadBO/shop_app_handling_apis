@@ -4,6 +4,7 @@ import 'package:shop_app_handeling_apis/core/resources/assets_manager.dart';
 import 'package:shop_app_handeling_apis/core/resources/colors_manager.dart';
 import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/views/login_screen.dart';
+import 'package:shop_app_handeling_apis/features/auth/presentation/widgets/filled_circle.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -56,85 +57,131 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
               child: const Row(
                 children: [
-                  Text(StringsManager.skipButtonLabel),
-                  Icon(Icons.arrow_forward_ios, size: 14),
+                  Text(
+                    StringsManager.skipButtonLabel,
+                    style: TextStyle(fontWeight: FontWeight.w900),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 14,
+                  ),
                 ],
               ),
             ),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                controller: pageController,
-                onPageChanged: (value) {
-                  setState(() {
-                    page = value;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Spacer(),
-                      Image(
-                        image: AssetImage(onBoardingImages[index]),
-                      ),
-                      const Spacer(),
-                      Text(
-                        onBoardingTitles[index],
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      Text(
-                        onBoardingPassages[index],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: ColorsManager.grey,
-                        ),
-                      ),
-                      const Spacer(),
-                    ],
-                  );
-                },
-                itemCount: 3,
-              ),
+      body: Stack(
+        children: [
+          const Positioned(
+            bottom: -40,
+            left: -40,
+            child: FilledCircle(
+              radius: 250,
+              color: ColorsManager.blue,
             ),
-            page != 2
-                ? SmoothPageIndicator(
-                    controller: pageController,
-                    count: 3,
-                    effect: const WormEffect(
-                      dotColor: ColorsManager.lightGrey,
-                      activeDotColor: ColorsManager.primary,
-                      radius: 8,
-                      dotHeight: 8,
-                      dotWidth: 8,
-                      spacing: 4,
-                    ),
-                  )
-                : MaterialButton(
-                    color: ColorsManager.primary,
-                    textColor: ColorsManager.white,
-                    minWidth: double.infinity,
-                    height: 50,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    onPressed: () {
-                      getStarted(context);
-                    },
-                    child: const Text(
-                      StringsManager.getStartedButtonLabel,
-                      style: TextStyle(fontSize: 18),
-                    ),
+          ),
+           const Positioned(
+            bottom: -50,
+            right: -45,
+            child: FilledCircle(
+              radius: 330,
+              color: ColorsManager.blue,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SmoothPageIndicator(
+                  controller: pageController,
+                  count: 3,
+                  effect: const WormEffect(
+                    dotColor: ColorsManager.lightGrey,
+                    activeDotColor: ColorsManager.primary,
+                    type: WormType.thin,
+                    radius: 8,
+                    dotHeight: 10,
+                    dotWidth: 10,
+                    spacing: 4,
                   ),
-          ],
-        ),
+                ),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: PageView.builder(
+                    controller: pageController,
+                    onPageChanged: (value) {
+                      setState(() {
+                        page = value;
+                      });
+                    },
+                    itemBuilder: (context, index) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // const Spacer(),
+                          Text(
+                            onBoardingTitles[index],
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 25,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            onBoardingPassages[index],
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w900,
+                              color: ColorsManager.grey,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Visibility(
+                              visible: page == 2,
+                              child: MaterialButton(
+                                color: ColorsManager.primary,
+                                textColor: ColorsManager.white,
+                                height: 50,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                onPressed: () {
+                                  getStarted(context);
+                                },
+                                child: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      StringsManager.getStartedButtonLabel,
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Icon(Icons.arrow_forward),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          Image(
+                            image: AssetImage(onBoardingImages[index]),
+                            fit: BoxFit.contain,
+                          ),
+                          const Spacer(),
+                        ],
+                      );
+                    },
+                    itemCount: 3,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -18,4 +18,5 @@ class ColorsManager {
   static const Color darkThemeSecondaryText = Color(0xffb0b3b8);
   static const MaterialColor deepPurple = Colors.deepPurple;
   static const Color green = Colors.green;
+  static const Color blue = Color.fromARGB(255, 84, 181, 226);
 }
