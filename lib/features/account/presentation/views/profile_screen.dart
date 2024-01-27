@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_handeling_apis/core/resources/colors_manager.dart';
+import 'package:shop_app_handeling_apis/core/resources/routes_manager.dart';
 import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
 import 'package:shop_app_handeling_apis/features/account/presentation/cubits/account_cubit.dart';
 import 'package:shop_app_handeling_apis/features/account/presentation/cubits/account_states.dart';
 import 'package:shop_app_handeling_apis/features/account/presentation/widgets/account_header.dart';
 import 'package:shop_app_handeling_apis/features/account/presentation/widgets/account_tile.dart';
+import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_cubit.dart';
+import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_states.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -75,10 +78,21 @@ class ProfileScreen extends StatelessWidget {
                               iconData: Icons.brightness_2,
                               onTap: () {},
                             ),
-                            AccountTile(
-                              label: StringsManager.logoutLabel,
-                              iconData: Icons.logout,
-                              onTap: () {},
+                            BlocBuilder<AuthCubit, AuthStates>(
+                              builder: (BuildContext context, state) {
+                                final authCubit = AuthCubit.get(context);
+                                return AccountTile(
+                                  label: StringsManager.logoutLabel,
+                                  iconData: Icons.logout,
+                                  onTap: () {
+                                    authCubit.logout();
+                                    Navigator.pushReplacementNamed(
+                                      context,
+                                      Routes.shopScreenLayoutRoute,
+                                    );
+                                  },
+                                );
+                              },
                             ),
                           ],
                         ),

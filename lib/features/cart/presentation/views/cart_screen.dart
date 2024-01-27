@@ -51,7 +51,8 @@ class CartScreen extends StatelessWidget {
                   color: ColorsManager.primary,
                 ),
               )
-            : cartCubit.cartEntity == null
+            : cartCubit.cartEntity == null ||
+                    cartCubit.cartEntity!.cartItems.isEmpty
                 ? const Center(
                     child: Text(StringsManager.emptyCartLabel),
                   )
