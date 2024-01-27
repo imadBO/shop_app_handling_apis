@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app_handeling_apis/core/resources/colors_manager.dart';
 
 class CustomFormField extends StatelessWidget {
   const CustomFormField({
@@ -50,8 +51,11 @@ class CustomFormField extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         keyboardType: TextInputType.text,
         obscureText: obscure,
+        cursorColor: ColorsManager.blue,
+        cursorHeight: 25,
         decoration: InputDecoration(
           label: Text(label),
+          floatingLabelStyle: const TextStyle(color: ColorsManager.blue),
           prefixIcon: Icon(prefixIcon),
           suffixIcon: IconButton(
             icon: Icon(suffixIcon),
@@ -62,6 +66,9 @@ class CustomFormField extends StatelessWidget {
           ),
           contentPadding: contentPadding,
           floatingLabelBehavior: floatingBehavior,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(radius ?? 20),
+          ),
         ),
         readOnly: readOnly,
         enabled: enabled,

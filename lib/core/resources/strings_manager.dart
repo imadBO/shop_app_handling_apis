@@ -15,7 +15,7 @@ class StringsManager {
 
   //Onboarding screen.
   static const String skipButtonLabel = 'SKIP';
-  static const String getStartedButtonLabel = 'SKIP';
+  static const String getStartedButtonLabel = 'Get started';
   static const String onboardingTitle1 =
       'Welcome to the Ultimate Shopping Experience!';
   static const String onboardingTitle2 =

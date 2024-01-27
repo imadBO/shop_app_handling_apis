@@ -19,15 +19,19 @@ class AccountHeader extends StatelessWidget {
           CircleAvatar(
             radius: 55,
             backgroundColor: ColorsManager.darkGrey,
-            child: CachedNetworkImage(
-              imageUrl: accountCubit.profile!.image,
-              placeholder: (context, url) => const Icon(
-                Icons.person_2_outlined,
-                color: ColorsManager.lightGrey,
-              ),
-              errorWidget: (context, url, error) => const Icon(
-                Icons.broken_image,
-                color: ColorsManager.lightGrey,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(55),
+              child: CachedNetworkImage(
+                imageUrl: accountCubit.profile!.image,
+                placeholder: (context, url) => const Icon(
+                  Icons.person_2_outlined,
+                  color: ColorsManager.lightGrey,
+                ),
+                errorWidget: (context, url, error) => const Icon(
+                  Icons.broken_image,
+                  color: ColorsManager.lightGrey,
+                ),
+                fit: BoxFit.contain,
               ),
             ),
           ),
