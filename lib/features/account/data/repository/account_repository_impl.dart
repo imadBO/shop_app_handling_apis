@@ -24,4 +24,25 @@ class AccountRepositoryImpl implements AccountRepository {
       return DataFailure(error.toString());
     }
   }
+
+  @override
+  Future<DataState<bool>> changePassword(
+      {required String token, required Map<String, String> pwds}) async {
+    try {
+      final response = await _accountService.changePassword(
+        token: token,
+        pwds: pwds,
+      );
+      if (response.data['status'] == true) {
+        return const DataSuccess(true);
+      } else {
+        return DataFailure(response.data['message']);
+      }
+    } catch (error) {
+      if (error is DioException) {
+        return DataFailureDio(error);
+      }
+      return DataFailure(error.toString());
+    }
+  }
 }

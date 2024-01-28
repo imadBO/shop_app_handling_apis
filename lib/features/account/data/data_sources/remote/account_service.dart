@@ -12,4 +12,15 @@ class AccountService {
       token: token,
     );
   }
+
+  Future<Response> changePassword({
+    required String token,
+    required Map<String, String> pwds,
+  }) {
+    return DioHelper.post(
+      endPoint: AppConstants.changePasswordEndpoint,
+      token: token,
+      data: pwds,
+    );
+  }
 }

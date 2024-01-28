@@ -63,9 +63,9 @@ class AuthCubit extends Cubit<AuthStates> {
 
   Future<void> logout() async {
     isLoading = true;
-    emit(LoadingState());
     String tempToken = CachedHelper.getData('token');
     await CachedHelper.deleteData('token');
+    emit(LoadingState());
     final response = await _logoutUsecase.call(
       params: tempToken,
     );

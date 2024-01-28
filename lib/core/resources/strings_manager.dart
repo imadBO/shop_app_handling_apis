@@ -69,6 +69,11 @@ class StringsManager {
   static const String changePwdLabel = 'Change password';
   static const String themeLabel = 'Change theme';
   static const String logoutLabel = 'Logout';
+  static const String addressesLabel = 'My addresses';
+
+  //Change password form.
+  static const String currentPwdLabel = 'Current password';
+  static const String newPwdLabel = 'New password';
   //Errors.
   static const String defaultError = 'Something went wrong! Try again later.';
   static const String emailEmpty = "Email must not be empty";

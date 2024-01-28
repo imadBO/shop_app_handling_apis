@@ -15,4 +15,5 @@ class AppConstants {
   static const cartsEndpoint = 'carts';
   static const productDetailsEndpoint = 'products';
   static const profileEndpoint = 'profile';
+  static const changePasswordEndpoint = 'change-password';
 }

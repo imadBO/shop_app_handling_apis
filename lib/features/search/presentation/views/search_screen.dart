@@ -5,7 +5,7 @@ import 'package:shop_app_handeling_apis/core/resources/colors_manager.dart';
 import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_cubit.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_states.dart';
-import 'package:shop_app_handeling_apis/features/home/presentation/widgets/product_item.dart';
+import 'package:shop_app_handeling_apis/features/home/presentation/widgets/products_grid.dart';
 import 'package:shop_app_handeling_apis/features/search/presentation/cubits/search_cubit.dart';
 import 'package:shop_app_handeling_apis/features/search/presentation/cubits/search_states.dart';
 
@@ -52,22 +52,9 @@ class SearchScreen extends StatelessWidget {
                       listener: (context, state) {},
                       builder: (context, Object? state) {
                         final homeCubit = HomeCubit.get(context);
-                        return GridView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, // Number of columns in the grid
-                            crossAxisSpacing: 2,
-                            mainAxisSpacing: 2,
-                            childAspectRatio: 1 / 1.5,
-                          ),
-                          itemBuilder: (context, index) {
-                            return ProductItem(
-                              product: searchCubit.searchResult[index],
-                              favoriteCallback: homeCubit.toggleFavorite,
-                            );
-                          },
-                          itemCount: searchCubit.searchResult.length,
+                        return ProductsGrid(
+                          productsList: searchCubit.searchResult,
+                          favoriteCallback: homeCubit.toggleFavorite,
                         );
                       },
                     ),

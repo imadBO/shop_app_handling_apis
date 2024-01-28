@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app_handeling_apis/core/resources/strings_manager.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_cubit.dart';
 import 'package:shop_app_handeling_apis/features/home/presentation/cubits/home_states.dart';
-import 'package:shop_app_handeling_apis/features/home/presentation/widgets/product_item.dart';
+import 'package:shop_app_handeling_apis/features/home/presentation/widgets/products_grid.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
@@ -38,22 +38,9 @@ class FavoritesScreen extends StatelessWidget {
                 ? const Center(
                     child: Text(StringsManager.noFavorites),
                   )
-                : GridView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // Number of columns in the grid
-                      crossAxisSpacing: 2,
-                      mainAxisSpacing: 2,
-                      childAspectRatio: 1 / 1.5,
-                    ),
-                    itemBuilder: (context, index) {
-                      return ProductItem(
-                        product: homeCubit.favorites[index],
-                        favoriteCallback: homeCubit.toggleFavorite,
-                      );
-                    },
-                    itemCount: homeCubit.favorites.length,
+                : ProductsGrid(
+                    productsList: homeCubit.favorites,
+                    favoriteCallback: homeCubit.toggleFavorite,
                   );
       },
     );

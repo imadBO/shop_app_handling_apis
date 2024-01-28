@@ -51,11 +51,11 @@ class CustomFormField extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         keyboardType: TextInputType.text,
         obscureText: obscure,
-        cursorColor: ColorsManager.blue,
+        cursorColor: ColorsManager.primary,
         cursorHeight: 25,
         decoration: InputDecoration(
           label: Text(label),
-          floatingLabelStyle: const TextStyle(color: ColorsManager.blue),
+          floatingLabelStyle: const TextStyle(color: ColorsManager.primary),
           prefixIcon: Icon(prefixIcon),
           suffixIcon: IconButton(
             icon: Icon(suffixIcon),

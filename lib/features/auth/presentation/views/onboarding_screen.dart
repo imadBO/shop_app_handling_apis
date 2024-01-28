@@ -81,7 +81,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               color: ColorsManager.blue,
             ),
           ),
-           const Positioned(
+          const Positioned(
             bottom: -50,
             right: -45,
             child: FilledCircle(
@@ -170,6 +170,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Image(
                             image: AssetImage(onBoardingImages[index]),
                             fit: BoxFit.contain,
+                            height: MediaQuery.of(context).size.height * 0.3,
                           ),
                           const Spacer(),
                         ],
