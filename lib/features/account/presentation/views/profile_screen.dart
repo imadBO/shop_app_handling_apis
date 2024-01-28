@@ -7,6 +7,7 @@ import 'package:shop_app_handeling_apis/features/account/presentation/cubits/acc
 import 'package:shop_app_handeling_apis/features/account/presentation/cubits/account_states.dart';
 import 'package:shop_app_handeling_apis/features/account/presentation/widgets/account_header.dart';
 import 'package:shop_app_handeling_apis/features/account/presentation/widgets/account_tile.dart';
+import 'package:shop_app_handeling_apis/features/account/presentation/widgets/change_pwd_form.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:shop_app_handeling_apis/features/auth/presentation/cubits/auth_states.dart';
 
@@ -60,6 +61,11 @@ class ProfileScreen extends StatelessWidget {
                               iconData: Icons.shopping_bag,
                               onTap: () {},
                             ),
+                            AccountTile(
+                              label: StringsManager.addressesLabel,
+                              iconData: Icons.home_work,
+                              onTap: () {},
+                            ),
                             const Text(
                               StringsManager.settingsTitle,
                               style: TextStyle(
@@ -71,7 +77,15 @@ class ProfileScreen extends StatelessWidget {
                             AccountTile(
                               label: StringsManager.changePwdLabel,
                               iconData: Icons.lock,
-                              onTap: () {},
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return ChangePwdForm();
+                                  },
+                                  isScrollControlled: true,
+                                );
+                              },
                             ),
                             AccountTile(
                               label: StringsManager.themeLabel,

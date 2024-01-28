@@ -3,4 +3,8 @@ import 'package:shop_app_handeling_apis/features/account/domain/entities/profile
 
 abstract class AccountRepository {
   Future<DataState<ProfileEntity>> getProfile({required String token});
+  Future<DataState<bool>> changePassword({
+    required String token,
+    required Map<String, String> pwds,
+  });
 }

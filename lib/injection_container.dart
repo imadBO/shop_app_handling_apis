@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shop_app_handeling_apis/features/account/data/data_sources/remote/account_service.dart';
 import 'package:shop_app_handeling_apis/features/account/data/repository/account_repository_impl.dart';
 import 'package:shop_app_handeling_apis/features/account/domain/repository/account_repository.dart';
+import 'package:shop_app_handeling_apis/features/account/domain/use_cases/change_pwd_usecase.dart';
 import 'package:shop_app_handeling_apis/features/account/domain/use_cases/get_profile_usecase.dart';
 import 'package:shop_app_handeling_apis/features/account/presentation/cubits/account_cubit.dart';
 import 'package:shop_app_handeling_apis/features/auth/data/data_sources/remote/auth_services.dart';
@@ -128,7 +129,13 @@ Future<void> initDependencies() async {
   accountSl.registerSingleton<GetProfileUsecase>(
     GetProfileUsecase(accountSl<AccountRepository>()),
   );
+  accountSl.registerSingleton<ChangePwdUsecase>(
+    ChangePwdUsecase(accountSl<AccountRepository>()),
+  );
   accountSl.registerSingleton<AccountCubit>(
-    AccountCubit(accountSl<GetProfileUsecase>()),
+    AccountCubit(
+      accountSl<GetProfileUsecase>(),
+      accountSl<ChangePwdUsecase>(),
+    ),
   );
 }

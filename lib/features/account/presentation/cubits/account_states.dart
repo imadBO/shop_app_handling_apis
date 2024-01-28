@@ -11,3 +11,14 @@ class ProfileFetchedErrorState extends AccountStates {
 }
 
 class ProfileLoadingState extends AccountStates {}
+
+
+class PasswordChangedSuccessState extends AccountStates {}
+
+class PasswordChangedErrorState extends AccountStates {
+  final String error;
+
+  PasswordChangedErrorState(this.error);
+}
+
+class PasswordLoadingState extends AccountStates {}
